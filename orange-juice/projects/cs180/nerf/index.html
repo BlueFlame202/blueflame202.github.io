@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>CS 180 NeRF Project</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+      body {
+        font-family: 'Merriweather';
+        padding: 5%;
+      }
+      a {
+        text-decoration: none;
+        color: green;
+      }
+
+      .container {
+          display: grid;
+          grid-template-columns: 1fr 4fr;
+          gap: 10px;
+      }
+      .column {
+          padding: 10px;
+      }
+      .green-border {
+          border-right: 1px solid yellowgreen;
+      }
+      .widget {
+          position: sticky;
+          top: 0;
+          align-self: start;
+          padding-top: 10%;
+      }
+      .divider {
+          border: 1px solid yellowgreen;
+      }
+    </style>
+
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <script type="text/javascript">
+      window.MathJax = {
+        tex: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+          macros: {
+            "\Z": "\\mathbb{Z}",
+            "\Hom": "\\mathrm{Hom}",
+            "\Aut": "\\mathrm{Aut}",
+            "\null": "\\mathrm{null}",
+            "\R": "\\mathbb{R}",
+            "\N": "\\mathbb{N}",
+            "\Q": "\\mathbb{Q}",
+            "\Primes": "\\mathbb{P}",
+            "\C": "\\mathbb{C}",
+            "\F": "\\mathbb{F}",
+            "\D": "\\mathbb{D}",
+            "\Hart": "\\mathbb{H}",
+            "\Cat": "\\mathsf{Cat}",
+            "\CAT": "\\mathsf{CAT}",
+            "\CatC": "\\mathsf{CatC}",
+            "\CatD": "\\mathsf{CatD}",
+            "\CatE": "\\mathsf{CatE}",
+            "\CSet": "\\mathsf{Set}",
+            "\CGrp": "\\mathsf{Grp}",
+            "\CRing": "\\mathsf{Ring}",
+            "\CCRing": "\\mathsf{CRing}",
+            "\CMod": "\\mathsf{Mod}",
+            "\lendshow": "\\square",
+            "\tendshow": "\\blacksquare"
+          }
+        },
+        options: {
+          renderActions: {
+            addMenu: [],
+            checkLoading: []
+          },
+          ignoreHtmlClass: 'tex2jax_ignore',
+          processHtmlClass: 'tex2jax_process'
+        },
+        loader: {load: ['[tex]/ams']},
+        startup: {
+          ready: () => {
+            window.MathJax.startup.defaultReady();
+          }
+        }
+      };
+    </script>
+  </head>
+  <body>
+    <a href="..">Back to All Projects</a>
+    <h1>CS 180 Final Project Report</h1>
+    <b>Aathreya Kadambi</b>
+
+    <p>Getting to build a NeRF! Exciting! :-)</p>
+
+    <div class="container">
+      <div class="column green-border">
+        <div class="widget">
+          <div class="divider"></div>
+          <h3><a href="#gallery">Gallery</a></h3>
+          <div class="divider"></div>
+          <h3><a href="#nef">Neural Fields</a></h3>
+          <div class="divider"></div>
+          <h3><a href="#log">Log</a></h3>
+        </div>
+      </div>
+      <div class="column">
+        <h2 id="gallery">Gallery</h2>
+        <center width="100%">
+          
+          <video controls width="45%">
+            <source src="output_video_22.mov" type="video/quicktime" max-width="100%">
+            Your browser does not support the video tag.
+          </video>
+        </center>
+
+
+        <h2 id="nef">Neural Fields</h2>
+
+        <h2 id="nerf">Neural Radiance Fields</h2>
+        <center><img src="cameras_render.png" width="45%" /></center>
+
+        <h2 id="log">Adventure Log</h2>
+        <dd>
+        <details>
+          <summary>8. The Penultimate Stage: Pain and Perserverence (hehehe, that sounds pretty cool)</summary>
+
+          After several iterations, I was noticing that sometimes, the model wouldn't train well at all (note, I was using a batch size of 5000 instead of 10000 due to memory limitations). Even on Colab, for some reason 5000 was working better for me. But in either case, the training results were highly unpredictable. Sometimes the model would barely train, other times it would get the expected results (as good as the staff solution/other people on the Ed). I'm not yet sure why this is the case, but here are some <code>.gif</code>s after my 1000, 2000, 3000, and 4000 iteration checkpoints on my best model so far:
+          <center>
+            <img src="test_gif.gif" alt="A fun GIF" width="25%">
+            <img src="test_gif_2000_epochs_augmented_colab.gif" alt="A fun GIF" width="25%">
+            <img src="test_gif_3000_epochs_augmented_colab.gif" alt="A fun GIF" width="25%">
+            <img src="test_gif_4000_epochs_augmented_colab.gif" alt="A fun GIF" width="25%">
+          </center>
+          These aren't too bad, but they aren't quite as good as I wanted. Based on what I saw in the Ed, perhaps there was an issue somewhere in my sampling. The results were highly inconsistent though, so I thought maybe there was something wrong with my model.<br/><br/>
+
+          I'm so cooked, I've been working on this for hours... and my results have only gotten worse! I read one too many motivational quotes and thought to "break things so that I could rebuild them better". But I only really accomplished that first part, it seems. 😂 😭 <br/><br/>
+
+          I'm really struggling to debug or figure out what's up because to be honest, every test I've written and all the visualizations seem to run as expected. There's only one suspicious thing according to the spec, but I really don't think it's that suspicious to be honest, and people on the Ed seem to agree with my opinion (no staff confirmation though, so perhaps we're all wrong). Luckily I still have the model files from the above iteration, but I've <b>never</b> been able to train a model that good again. Somehow after I tried breaking things, I've been getting high PSNRs but weird looking outputs. I really need a more systematic way to go about debugging and visualize what's happening here.<br/><br/>
+
+          After watching a few instagram reels, I came across one to take advice from water or something, and took a shower, and woah, somehow after coming back, I rewrote my code in a Jupyter notebook and it's kind of working (and to my delight, not using up a crazy amount of memory on my computer). I actually think reducing the batch size to 5000 helps, although this is mainly a hunch. That's actually how I did it the first time, but I switched it to 10000 on subsequent runs based on the spec and also because I thought it would boost performance by decreasing variance in the stochastic gradient descent... or something. I think it's actually helping because of memory limitations and potentially how PyTorch does memory fragmentation or something related to this, but somehow, I've gotten it to work again.
+          <center>
+            <img src="local_v2_gif_1000_epochs.gif" width="25%" />
+          </center>
+          This time I also have training loss and PSNR curves. Unfortunately, I don't have the same for validation on this local version, doing those would have been way too costly to run in terms of time and also GPU (I would have had to split the work up instead of one huge batch, which would take a while to process). It was probably doable, but since I'm still figuring out how to make my model training consistent, I didn't do that. Here are my training loss and PSNR:
+          <center>
+            <img src="local_v2_train_loss_1000_epochs.png" width="45%" />
+            <img src="local_v2_train_psnr_1000_epochs.png" width="45%" />
+          </center>
+          and finally here's a simple memory usage graph over time (kind of vague, but this is basically with respect to where I collected it in the "Becoming Memory Efficient" section below). The y-axis is in GB.
+          <center>
+            <img src="local_v2_memory_usage.png" width="45%" />
+          </center>
+          I made this plot to show a weird aspect of using PyTorch on MPS: for some reason, it doesn't seem to free up memory as easily as it does on cuda GPUs. For example, see these plots which I got from Kaggle:
+          <center>
+            <img src="memory_usage.png" width="45%" />
+            <img src="memory_usage (3).png" width="45%" />
+          </center>
+          You'll notice there are two curves. The orange is for "reserved" memory and the blue is for "allocated" memory. For some reason, PyTorch only supports showing the allocated memory for MPS, whereas it can show both for cuda. A little sus, but hey, I still love PyTorch. The reason you see higher reserved memory is that I did a validation step in Kaggle. I didn't record this memory usage in the blue curve, but it essentially causes the spike in "reserved" memory allocations. Essentially, PyTorch doesn't really "free up" all the memory it unallocates, it just keeps it reserved for easier access for the future, which makes things faster... unless you don't have access to a lot of memory, in which case it kind of makes things slower... (at least that's what I've been noticing). The reason you see ups and downs in the cuda plots is that the memory gets unallocated (but still reserved) at the end of each training epoch in my training loop.
+        </details>
+        <details>
+          <summary>7. Becoming Memory Efficient</summary>
+
+          I think the first step to becoming memory efficient is profiling. Since everything is quite slow and glitchy on my laptop, I used Google Colab to print the reserved and allocated GPU memory at every point in time. My training loop was:
+<pre><code>
+for epoch in range(EPOCHS):
+  # TRAINING
+  model.train()
+  
+  print_memory_usage(f"Prior to Epoch {epoch+1}")
+  r_o, r_d, pixels = train_dataset.sample_rays(BATCH_SIZE)
+  x = sample_along_rays(r_o, r_d, perturb=True, n_samples=N_SAMPLES)
+
+  r_d_expanded = np.repeat(r_d[:,np.newaxis,:], N_SAMPLES, axis=1)
+
+  x = x.astype(np.float32); r_d_expanded = r_d_expanded.astype(np.float32); 
+  pixels = pixels.astype(np.float32) # pixel is great name
+  X = torch.from_numpy(x); D = torch.from_numpy(r_d_expanded); P = torch.from_numpy(pixels)
+  print_memory_usage(f"Right after torch.from_numpy")
+  
+  X = X.to(device); D = D.to(device); P = P.to(device)
+  print_memory_usage(f"Right after .to(device)")
+  
+  density, rgb = model(X, D)
+  print_memory_usage(f"Right after calling model")
+  
+  P_pred = volrend(density, rgb, N_SAMPLES)
+  print_memory_usage(f"Right after volume render")
+  
+  l = loss(P_pred, P)
+  print_memory_usage(f"Right after evaluating loss")
+
+  optimizer.zero_grad()
+  print_memory_usage(f"Right after zero_grad")
+
+  l.backward()
+  print_memory_usage(f"Right after backward")
+
+  optimizer.step()
+  print_memory_usage(f"Right after optimizer.step()")
+
+  optimizer.zero_grad()
+  print_memory_usage(f"Right after zero grad")
+
+  t_losses.append(l.item())
+  t_psnrs.append(psnr(l).item())
+
+  if epoch % 5 == 4:
+    # VALIDATION
+    model.eval()
+    i = random.randint(0, 9) # pick a random image
+
+    r_o = val_dataset.rays_o[i*40000:(i+1)*40000]
+    r_d = val_dataset.rays_d[i*40000:(i+1)*40000]
+    pixels = val_dataset.pixels[i*40000:(i+1)*40000]
+    x = sample_along_rays(r_o, r_d, perturb=True, n_samples=N_SAMPLES)
+    r_d_expanded = np.repeat(r_d[:,np.newaxis,:], N_SAMPLES, axis=1)
+
+    x = x.astype(np.float32); r_d_expanded = r_d_expanded.astype(np.float32); 
+    pixels = pixels.astype(np.float32) # pixel is great name
+    X = torch.from_numpy(x); D = torch.from_numpy(r_d_expanded); P = torch.from_numpy(pixels)
+    X = X.to(device); D = D.to(device); P = P.to(device)
+
+    density, rgb = model(X, D)
+    P_pred = volrend(density, rgb, N_SAMPLES)
+
+    val_l = loss(P_pred, P)
+    P = P.detach()
+    P_pred = P_pred.detach()
+    v_losses.append(val_l.item())
+    v_psnrs.append(psnr(val_l).item())
+    optimizer.zero_grad()
+
+    print(f"Epoch {epoch+1}, Loss: {t_losses[-1]}, psnr: {t_psnrs[-1]}, Validation Loss: {v_losses[-1]}, 
+          psnr: {v_psnrs[-1]}", "Threads used:", torch.get_num_threads())
+
+  if epoch % 50 == 49:
+    image = torch.cat(P_pred, P).reshape((200, 400, 3)).detach().numpy()
+    cv2.imwrite(f'lego-truck-reconstruction-epoch-{epoch+1}.png', 255*image)
+</code></pre>
+and the output was (sorry for how verbose this is):
+<pre><code>
+Memory at Prior to Epoch 1: Allocated = 0.029 GB, Reserved = 2.403 GB
+Memory at Right after torch.from_numpy: Allocated = 0.029 GB, Reserved = 2.403 GB
+Memory at Right after .to(device): Allocated = 0.033 GB, Reserved = 2.403 GB
+Memory at Right after calling model: Allocated = 1.690 GB, Reserved = 2.403 GB
+Memory at Right after volume render: Allocated = 1.693 GB, Reserved = 2.405 GB
+Memory at Right after evaluating loss: Allocated = 1.693 GB, Reserved = 2.405 GB
+Memory at Right after zero_grad: Allocated = 1.693 GB, Reserved = 2.405 GB
+Memory at Right after backward: Allocated = 0.038 GB, Reserved = 2.405 GB
+Memory at Right after optimizer.step(): Allocated = 0.038 GB, Reserved = 2.405 GB
+Memory at Right after zero grad: Allocated = 0.036 GB, Reserved = 2.405 GB
+Memory at Prior to Epoch 2: Allocated = 0.029 GB, Reserved = 2.405 GB
+Memory at Right after torch.from_numpy: Allocated = 0.029 GB, Reserved = 2.405 GB
+Memory at Right after .to(device): Allocated = 0.034 GB, Reserved = 2.405 GB
+Memory at Right after calling model: Allocated = 1.691 GB, Reserved = 2.405 GB
+Memory at Right after volume render: Allocated = 1.694 GB, Reserved = 2.405 GB
+Memory at Right after evaluating loss: Allocated = 1.694 GB, Reserved = 2.405 GB
+Memory at Right after zero_grad: Allocated = 1.694 GB, Reserved = 2.405 GB
+Memory at Right after backward: Allocated = 0.039 GB, Reserved = 2.405 GB
+Memory at Right after optimizer.step(): Allocated = 0.039 GB, Reserved = 2.405 GB
+Memory at Right after zero grad: Allocated = 0.037 GB, Reserved = 2.405 GB
+Memory at Prior to Epoch 3: Allocated = 0.030 GB, Reserved = 2.405 GB
+Memory at Right after torch.from_numpy: Allocated = 0.030 GB, Reserved = 2.405 GB
+Memory at Right after .to(device): Allocated = 0.034 GB, Reserved = 2.405 GB
+Memory at Right after calling model: Allocated = 1.691 GB, Reserved = 2.405 GB
+Memory at Right after volume render: Allocated = 1.694 GB, Reserved = 2.405 GB
+Memory at Right after evaluating loss: Allocated = 1.694 GB, Reserved = 2.405 GB
+Memory at Right after zero_grad: Allocated = 1.694 GB, Reserved = 2.405 GB
+Memory at Right after backward: Allocated = 0.039 GB, Reserved = 2.405 GB
+Memory at Right after optimizer.step(): Allocated = 0.039 GB, Reserved = 2.405 GB
+Memory at Right after zero grad: Allocated = 0.037 GB, Reserved = 2.405 GB
+Memory at Prior to Epoch 4: Allocated = 0.037 GB, Reserved = 2.405 GB
+Memory at Right after torch.from_numpy: Allocated = 0.033 GB, Reserved = 2.405 GB
+Memory at Right after .to(device): Allocated = 0.037 GB, Reserved = 2.405 GB
+Memory at Right after calling model: Allocated = 1.691 GB, Reserved = 2.405 GB
+Memory at Right after volume render: Allocated = 1.694 GB, Reserved = 2.405 GB
+Memory at Right after evaluating loss: Allocated = 1.694 GB, Reserved = 2.405 GB
+Memory at Right after zero_grad: Allocated = 1.694 GB, Reserved = 2.405 GB
+Memory at Right after backward: Allocated = 0.039 GB, Reserved = 2.405 GB
+Memory at Right after optimizer.step(): Allocated = 0.039 GB, Reserved = 2.405 GB
+Memory at Right after zero grad: Allocated = 0.037 GB, Reserved = 2.405 GB
+Memory at Prior to Epoch 5: Allocated = 0.029 GB, Reserved = 2.405 GB
+Memory at Right after torch.from_numpy: Allocated = 0.029 GB, Reserved = 2.405 GB
+Memory at Right after .to(device): Allocated = 0.033 GB, Reserved = 2.405 GB
+Memory at Right after calling model: Allocated = 1.690 GB, Reserved = 2.405 GB
+Memory at Right after volume render: Allocated = 1.693 GB, Reserved = 2.405 GB
+Memory at Right after evaluating loss: Allocated = 1.693 GB, Reserved = 2.405 GB
+Memory at Right after zero_grad: Allocated = 1.693 GB, Reserved = 2.405 GB
+Memory at Right after backward: Allocated = 0.038 GB, Reserved = 2.405 GB
+Memory at Right after optimizer.step(): Allocated = 0.038 GB, Reserved = 2.405 GB
+Memory at Right after zero grad: Allocated = 0.036 GB, Reserved = 2.405 GB
+Epoch 5, Loss: 0.17976847290992737, psnr: 7.452865123748779, 
+      Validation Loss: 0.1619608849287033, psnr: 7.9058990478515625 Threads used: 1
+Memory at Prior to Epoch 6: Allocated = 13.341 GB, Reserved = 14.152 GB
+Memory at Right after torch.from_numpy: Allocated = 13.341 GB, Reserved = 14.152 GB
+Memory at Right after .to(device): Allocated = 13.346 GB, Reserved = 14.152 GB
+Memory at Right after calling model: Allocated = 15.003 GB, Reserved = 15.370 GB
+Memory at Right after volume render: Allocated = 15.006 GB, Reserved = 15.372 GB
+Memory at Right after evaluating loss: Allocated = 15.006 GB, Reserved = 15.372 GB
+Memory at Right after zero_grad: Allocated = 15.006 GB, Reserved = 15.372 GB
+Memory at Right after backward: Allocated = 13.350 GB, Reserved = 14.896 GB
+Memory at Right after optimizer.step(): Allocated = 13.350 GB, Reserved = 14.898 GB
+Memory at Right after zero grad: Allocated = 13.348 GB, Reserved = 14.898 GB
+Memory at Prior to Epoch 7: Allocated = 13.315 GB, Reserved = 14.898 GB
+Memory at Right after torch.from_numpy: Allocated = 13.315 GB, Reserved = 14.898 GB
+Memory at Right after .to(device): Allocated = 13.319 GB, Reserved = 14.898 GB
+Memory at Right after calling model: Allocated = 14.976 GB, Reserved = 15.412 GB
+Memory at Right after volume render: Allocated = 14.979 GB, Reserved = 15.412 GB
+Memory at Right after evaluating loss: Allocated = 14.979 GB, Reserved = 15.412 GB
+Memory at Right after zero_grad: Allocated = 14.979 GB, Reserved = 15.412 GB
+Memory at Right after backward: Allocated = 13.324 GB, Reserved = 15.594 GB
+Memory at Right after optimizer.step(): Allocated = 13.324 GB, Reserved = 15.594 GB
+Memory at Right after zero grad: Allocated = 13.322 GB, Reserved = 15.594 GB
+Memory at Prior to Epoch 8: Allocated = 13.322 GB, Reserved = 15.594 GB
+Memory at Right after torch.from_numpy: Allocated = 13.318 GB, Reserved = 15.594 GB
+Memory at Right after .to(device): Allocated = 13.322 GB, Reserved = 15.594 GB
+Memory at Right after calling model: Allocated = 14.976 GB, Reserved = 15.594 GB
+Memory at Right after volume render: Allocated = 14.979 GB, Reserved = 15.594 GB
+Memory at Right after evaluating loss: Allocated = 14.979 GB, Reserved = 15.594 GB
+Memory at Right after zero_grad: Allocated = 14.979 GB, Reserved = 15.594 GB
+Memory at Right after backward: Allocated = 13.324 GB, Reserved = 15.594 GB
+Memory at Right after optimizer.step(): Allocated = 13.324 GB, Reserved = 15.594 GB
+Memory at Right after zero grad: Allocated = 13.322 GB, Reserved = 15.594 GB
+Memory at Prior to Epoch 9: Allocated = 13.314 GB, Reserved = 15.594 GB
+Memory at Right after torch.from_numpy: Allocated = 13.314 GB, Reserved = 15.594 GB
+Memory at Right after .to(device): Allocated = 13.318 GB, Reserved = 15.594 GB
+Memory at Right after calling model: Allocated = 14.975 GB, Reserved = 15.594 GB
+Memory at Right after volume render: Allocated = 14.978 GB, Reserved = 15.594 GB
+Memory at Right after evaluating loss: Allocated = 14.978 GB, Reserved = 15.594 GB
+Memory at Right after zero_grad: Allocated = 14.978 GB, Reserved = 15.594 GB
+Memory at Right after backward: Allocated = 13.323 GB, Reserved = 15.594 GB
+Memory at Right after optimizer.step(): Allocated = 13.323 GB, Reserved = 15.594 GB
+Memory at Right after zero grad: Allocated = 13.321 GB, Reserved = 15.594 GB
+Memory at Prior to Epoch 10: Allocated = 13.314 GB, Reserved = 15.594 GB
+Memory at Right after torch.from_numpy: Allocated = 13.314 GB, Reserved = 15.594 GB
+Memory at Right after .to(device): Allocated = 13.319 GB, Reserved = 15.594 GB
+Memory at Right after calling model: Allocated = 14.976 GB, Reserved = 15.594 GB
+Memory at Right after volume render: Allocated = 14.979 GB, Reserved = 15.594 GB
+Memory at Right after evaluating loss: Allocated = 14.979 GB, Reserved = 15.594 GB
+Memory at Right after zero_grad: Allocated = 14.979 GB, Reserved = 15.594 GB
+Memory at Right after backward: Allocated = 13.324 GB, Reserved = 15.594 GB
+Memory at Right after optimizer.step(): Allocated = 13.324 GB, Reserved = 15.594 GB
+Memory at Right after zero grad: Allocated = 13.322 GB, Reserved = 15.594 GB
+---------------------------------------------------------------------------
+OutOfMemoryError                          Traceback (most recent call last)
+<ipython-input-26-293a56991829> in <cell line: 8>()
+     52         X = X.to(device); D = D.to(device); P = P.to(device)
+     53 
+---> 54         density, rgb = model(X, D)
+     55         P_pred = volrend(density, rgb, N_SAMPLES)
+     56 
+
+9 frames
+/usr/local/lib/python3.10/dist-packages/torch/nn/functional.py in relu(input, inplace)
+   1702         result = torch.relu_(input)
+   1703     else:
+-> 1704         result = torch.relu(input)
+   1705     return result
+   1706 
+
+OutOfMemoryError: CUDA out of memory. Tried to allocate 1.22 GiB...
+</code></pre>
+
+Looking through the above, I'm actually doing fine on memory until validation time! At this moment, we suddenly throw a ton of stuff onto the GPU, and it never gets freed (perhaps because I'm never doing a <code>.backward()</code> call). To resolve this, I tried using <code>with torch.no_grad()</code> to see if this would prevent loss from storing a bunch of extra information relating to gradients and such. <br /><br />
+
+This seemed to work on CUDA and Google Colab in terms of memory usage, but locally, I was still seeing a jump of around 15-20 GB in allocations prior to validation. This was significantly slowing down my training. Even stranger, Google Colab was just outputting empty black images for output, whereas my local version at least outputted some kind of structure. Until I could figure more out, I decided to move the validation to happen just once after everything else. My assumption was that maybe (since torch only hsa MPS support for showing one memory display, rather than a breakdown of allocated and reserved) the issue was actually with memory reservation locally, and that was slowing everything down. It seemed that only after the <i>next five iterations</i> did the displayed memory usage come down. Very strange to me. This actually reduced the time to run five-fold locally (makes sense).<br /> <br />
+
+Still, I was having major issues because my PSNR wasn't going up as fast as the staff solution (it was still a vague cloud even after 1000 iterations). I'll continue this in the next section.
+
+        </details>
+        <details>
+          <summary>6. Network Implementation and Volume Rendering</summary>
+
+          I was able to implement the <code>volrend</code> function without too many pains. The main issue was I shifted $T$ over to accomodate for the fact that the sum for $T$ goes up to $i-1$ rather than $i$, but I filled it in with zeros instead of ones (you need ones because $e^0 = 1$, and I was concatenating after taking <code>torch.exp</code>). Seeing tests passing feels awesome:
+          <center><img src="tests_passing.png" width="45%" /></center>
+          I also implemented the network, and my preliminary results were... well, difficult. I don't think my memory usage was the greatest, and to be honest, I wasn't sure why. Based on some rough computations I did, my model should have taken far less than a GB per run. But the memory usage on my computer and Google Colab was mind boggling, and my computer started glitching like crazy. I decided I needed to get to the bottom of this, and decided to dedicate a section to it.
+        </details>
+        <details>
+          <summary>5. Sampling</summary>
+
+          I had many things to debug here, starting with, surprisingly, <code>camera_to_world</code>! I was a bit silly and actually used <code>w2c</code> in this method instead of <code>c2w</code>. My tests weren't able to pick up on this because regardless of the matrix, $A^{-1}Ax = x$... so maybe the test was a bit silly.<br/><br/>
+
+          After that, I had this other issue:
+          <center><img src="weird-issue-n.png" width="45%" /></center>
+          If you look closely, the rays are only going through the bottom right quadrant of the image, and three-fourths of the rays aren't going through the image. I realized it was because I used <code>K = np.diag([focal, focal, 1])</code> instead of the whole matrix including the principal point. After that, I got to this delightful image:
+          <center><img src="delightful-image.png" width="45%" /></center>
+        </details>
+        <details>
+          <summary>4. Creating Rays from Camera</summary>
+          For the first part, implementing the <code>camera_to_world</code> function was fairly easy with <code>numpy</code>, and I simply tested it on the identity matrix to make sure that it would work for all vectors in $\R^4$. An important note is that while the spec said to test: <code>x == camera_to_world(c2w.inv(), camera_to_world(c2w, x))</code>, it made more sense to use <code>np.isclose</code> or manually check for floating point errors.<br/><br/>
+
+          I also wrote tests for <code>pixel_to_camera</code>, but didn't for <code>pixel_to_ray</code> to save time.
+
+          <center>
+            <img src="tests-passing-satisfying.png" width="45%" />
+          </center>
+        </details>
+        <details>
+          <summary>3. Starting NeRFs, Playing With Data</summary>
+          Before starting Part 2.1, I got this nice visualization of the cameras working with plotly, to make sure I was comfortable with the data:
+          <center>
+            <img src="camera-vis.png" width="45%" />
+          </center>
+          It's far from perfect, but I'd rather move to part 2.1 for now than continue to make this visualization pretty.
+        </details>
+        <details>
+            <summary>2. Neural Fields, PyTorch Segfault Disasters, and White Screens</summary>
+            I started with the Neural fields. In particular, I'm building the architecture mentioned on the CS 180 website. One issue I ran into that has been quite painful is that even though my custom torch Dataset seems fine in my opinion, creating a dataloader like <code>dataloader = DataLoader(img_data, batch_size=N_SAMPLE, shuffle=True)</code> has been creating segfault after segfault... and debugging hasn't helped. To avoid spending too much time on it, I decided to just load data myself.<br/>
+
+            Doing it my way ended up looking like this:
+            <pre><code>
+for epoch in range(EPOCHS):
+    random_indices = random.sample(list(range(len(img_data))), BATCH_SIZE)
+    X, Y = img_data[random_indices]
+    print(X.shape)
+    X = torch.from_numpy(X)
+    print(X.shape, X.device)
+    break</code></pre>
+            which outputted:
+            <pre><code>
+(10000, 2)
+torch.Size([10000, 2]) cpu</code></pre>
+            as one would expected. I think based on this output, there should be no need to unsqueeze or do any funny business like that.<br/><br/>
+
+            Another strange thing that happened was when updating my positional encoding class to work with batch sizes. My forward initially looked something like this:
+            <code><pre>
+def forward(self, x: torch.Tensor) -> torch.Tensor:
+    print("here")
+    batch_size, seq_len = x.shape
+    print(batch_size, seq_len)
+
+    temp = 2 * self.L + 1
+    print("here7", [batch_size, seq_len * temp])
+    y = torch.zeros([batch_size, seq_len * temp], device="cpu")
+
+    print("here7")
+    for i in range(batch_size):
+        for j in range(seq_len):
+            idx = j * temp
+            y[i, idx] = x[i, j]
+            print(idx)
+            for k in range(self.L):
+                factor = 2**k * math.pi * x[i, j]
+                y[i, idx + 2*k + 1] = torch.sin(factor)
+                y[i, idx + 2*k + 2] = torch.cos(factor)
+    print("here5")
+    return y
+            </pre></code>
+            which didn't really work (caused segfault), but changing the `torch.zeros` to `np.zeros` and then returning `torch.from_numpy(y)` magically worked... I guess because of memory allocation issues. I still don't know exactly why, or how to just initialize with `torch` from the start. But I think this might be a more memory-stable solution for now, so I went with it.<br/><br/>
+
+            After this, I was still getting a segfault! But this time, it was because the batch size was too large; 10k is definitely too large of a batch size for some computers (I have a MacBook Pro with an M2 chip).<br/><br/>
+            
+            At this point, I was feeling like I finally deserved my "I'm the computer fairy, I make the segfaults go away!" sticker... but then I got ANOTHER segfault. 🥲 This time, it was in the `optimizer.step()`. I definitely must have set up something weird, I've never had this many issues setting up a simple neural network. Then again, I usually don't have to make my own custom dataset, someone usually does that for me. I think I either messed up something in the custom dataset or the positional encodings. Anyhow, I needed to debug it, so I used the following snippet:
+            <code><pre>
+for param in model.parameters():
+print("hi", param)
+print("grad", param.grad)
+if param.grad is not None:
+    if torch.isnan(param.grad).any() or torch.isinf(param.grad).any():
+        print("NaN or Inf in gradients!")
+        break
+    else:
+        print(param.grad)
+            </pre></code>
+            which also segfaulted, on the third "hi" and "grad". By visual inspection, I didn't actually notice anything funky about the parameters or grad. Somehow, with some more print debugging, I realized the segfault was coming from the <code>torch.isnan(...).any()</code> and <code>torch.isinf(...).any()</code>. At this point, I also thought about it and realized... my positional encodings don't involve any model parameters. As such, they definitely shouldn't be the reason for the segfault, considering the <code>forward</code> call worked.<br/><br/>
+
+            After debugging into the <code>adam.py</code> file, I found that the issue was actually the line: <code>state['exp_avg'] = torch.zeros_like(p, memory_format=torch.preserve_format)</code>. I should've known... more memory allocation issues. At this point, I decided I should probably figure out what was up. I temporarily replaced that with numpy computations, but still not working. Me thinking I could debug this with print statements: (look at the terminal lol)
+            <center><img src="disaster1.png" width="45%" /></center>
+            Wow... now I've discovered that "lerp" isn't working.
+            <center><img src="disaster2.png" width="45%" /></center>
+            In the end... it was just a `pip install --upgrade torch torchvision torchaudio` that fixed my problems! Crazy... but now I can call myself the computer fairy. :-) After this, using dataloader also worked.
+
+            After the segfault fiasco, I noticed that my model was suffering severely from vanishing gradients, so I put in some batchnorms. Still nothing was working, and considering the gradient seemed to be small even in the earlier layers, I decided to get rid of the batchnorm and make sure my positional encodings were correct. Printing them out for <code>[[1.0, 1.0]]</code>, I got:
+            <pre><code>
+Example Positional Encoding:
+tensor([[ 1.0000e+00,  1.0000e+00, -8.7423e-08,  1.7485e-07,  3.4969e-07,
+          6.9938e-07,  1.3988e-06,  2.7975e-06,  5.5951e-06,  1.1190e-05,
+          2.2380e-05,  4.4760e-05, -1.0000e+00,  1.0000e+00,  1.0000e+00,
+          1.0000e+00,  1.0000e+00,  1.0000e+00,  1.0000e+00,  1.0000e+00,
+          1.0000e+00,  1.0000e+00, -8.7423e-08,  1.7485e-07,  3.4969e-07,
+          6.9938e-07,  1.3988e-06,  2.7975e-06,  5.5951e-06,  1.1190e-05,
+          2.2380e-05,  4.4760e-05, -1.0000e+00,  1.0000e+00,  1.0000e+00,
+          1.0000e+00,  1.0000e+00,  1.0000e+00,  1.0000e+00,  1.0000e+00,
+          1.0000e+00,  1.0000e+00]])
+            </code></pre>
+            After I looked at this output and thought about it, I realized something sus... it makes no sense to do positional encodings this way because the input $x$ will always be an integer, so $\sin(2^k\pi x)$ and $\cos(2^k\pi x)$ will always be something very close to $\{-1,0,1\}$.... That doesn't seem very useful! That's when I noticed the sentence in the spec... "You would want to normalize both the coordinates (x = x / image_width, y = y / image_height) and the colors (rgbs = rgbs / 255.0) to make them within the range of [0, 1]." So I need to normalize the coordinates too... at least now I know why! :-) I guess I'll have to read more carefully from now on.<br/><br/>
+
+            Even after fixing this though, the gradients just basically zero, and after a handful of epochs, I noticed that the parameters jsut weren't changing up to like 15 significant figures between each train iteration. So I decided to add back batch norms, which fixed that. On the other hand, I started getting these weird images (in epochs 1, 61, 101, and 161):
+            <center>
+              <img src="zhen-reconstruction-epoch-1.png" width="45%" />
+              <img src="zhen-reconstruction-epoch-61.png" width="45%" />
+              <img src="zhen-reconstruction-epoch-101.png" width="45%" />
+              <img src="zhen-reconstruction-epoch-161.png" width="45%" />
+            </center>
+            These look kind of pretty... or like a broken computer screen, but they're not quite what we want. I noticed the signs of the agverage gradients between epochs for each parameter were alternating a lot, so I thought to maybe work with the learning rate a bit. But after increasing the learning rate a lot, the gradients eventually went to zero. I was a bit self-conscious about adding in the batchnorms when the architecture on the website didn't say they were necessary, so I removed them, but same issue. And it always converged to a white screen. Mysterious.<br/><br/>
+
+            Interestingly, switching back from using <code>dataloader</code> to doing:
+            <pre><code>
+random_indices = random.sample(list(range(len(img_data))), BATCH_SIZE)
+X, Y = img_data[random_indices]
+X = torch.from_numpy(X); Y = torch.from_numpy(Y)
+            </code></pre>
+            completely changed my results!
+            <center>
+              <img src="zhen-reconstruction-epoch-1 copy.png" width="45%" />
+              <img src="zhen-reconstruction-epoch-21.png" width="45%" />
+              <img src="zhen-reconstruction-epoch-41.png" width="45%" />
+              <img src="zhen-reconstruction-epoch-61 copy.png" width="45%" />
+              <img src="zhen-reconstruction-epoch-81.png" width="45%" />
+              <img src="zhen-reconstruction-epoch-161 copy.png" width="45%" />
+              <img src="zhen-reconstruction-epoch-221.png" width="45%" />
+              <img src="zhen-reconstruction-epoch-281.png" width="45%" />
+            </center>
+            still a bit cooked though.... But these were definitely prettier. Some more from different iterations:
+            <center>
+              <img src="zhen-reconstruction-epoch-1 copy 2.png" width="45%" />
+              <img src="zhen-reconstruction-epoch-21 copy.png" width="45%" />
+              <img src="zhen-reconstruction-epoch-41 copy.png" width="45%" />
+              <img src="zhen-reconstruction-epoch-61 copy 2.png" width="45%" />
+            </center>
+            <center>
+              <img src="zhen-reconstruction-epoch-1 copy 3.png" width="45%" />
+              <img src="zhen-reconstruction-epoch-41 copy 2.png" width="45%" />
+              <img src="zhen-reconstruction-epoch-61 copy 3.png" width="45%" />
+              <img src="zhen-reconstruction-epoch-81 copy.png" width="45%" />
+            </center>
+            Given how pretty these were, I started saving them as videos. And after scrolling through Ed (somehow there weren't thaaat many people with problems at this stage so I was like hmm... what am I doing so wrong?) but I noticed someone mention their final loss was close to 80ish (actually scrolling back, I somehow can't find it again, but I feel like I saw something like that). That being said, someone else mentioned losses around 0.1, but I think using 0-255 pixel values would actually change the step size by a huge factor, so I decided to try that. I got this loss (using MSE):
+            <center>
+              <img src="train_loss.png" width="45%" />
+            </center>
+            Beautiful. But guess what video I got (for the generated image over time):
+            <center>
+              <video controls width="45%">
+                <source src="output_video.mov" type="video/quicktime">
+                <source src="output_video.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+            </center>
+            It turned out though, that the error was just from how I was making the dataset class/loading in the data.... 
+            <center><img src="oh-oh-data.png" width="45%" /></center>
+            With all of that trouble out of the way, I was finally able to get some meaningful results (as I would find out later though, there was still one more major issue). 
+            <center>
+              <video controls width="45%">
+                <source src="output_video_one_bn.mov" type="video/quicktime">
+                <source src="output_video_one_bn.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+            </center>
+            Here are some notes from my hyperparameter tuning (note: I was using BatchNorms between layers here because without them my results were very poor, or so I thought):
+            <center>
+              <table border="1", style="text-align: center;">
+                <thead>
+                  <tr>
+                    <th>Experiment</th>
+                    <th>L</th>
+                    <th>LR</th>
+                    <th>Other Parameters</th>
+                    <th>Training Time (s) *</th>
+                    <th>Loss</th>
+                    <th>PSNR</th>
+                    <th>Notes</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>6</td>
+                    <td>5</td>
+                    <td>0.01</td>
+                    <td>3000 Epochs, 10k Batch, 3 linear layers, Hidden Dimension 256</td>
+                    <td>231.2</td>
+                    <td>0.00296</td>
+                    <td>25.293</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>1</td>
+                    <td>10</td>
+                    <td>"</td>
+                    <td>"</td>
+                    <td>236.5</td>
+                    <td>0.00163</td>
+                    <td>27.867</td>
+                    <td>Spec Params</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>15</td>
+                    <td>"</td>
+                    <td>"</td>
+                    <td>244.7</td>
+                    <td>0.00167</td>
+                    <td>27.776</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td>25</td>
+                    <td>"</td>
+                    <td>"</td>
+                    <td>278.9</td>
+                    <td>0.00152</td>
+                    <td>28.189</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>4</td>
+                    <td>50</td>
+                    <td>"</td>
+                    <td>"</td>
+                    <td>331.6</td>
+                    <td>0.00129</td>
+                    <td>28.907</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>5</td>
+                    <td>100</td>
+                    <td>"</td>
+                    <td>"</td>
+                    <td>384.8</td>
+                    <td>0.00162</td>
+                    <td>27.903</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>13</td>
+                    <td>50</td>
+                    <td>0.001</td>
+                    <td>"</td>
+                    <td>307.6</td>
+                    <td>0.00144</td>
+                    <td>28.405</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>12</td>
+                    <td>"</td>
+                    <td>0.002</td>
+                    <td>"</td>
+                    <td>296.5</td>
+                    <td>0.00131</td>
+                    <td>28.820</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>11</td>
+                    <td>"</td>
+                    <td>0.005</td>
+                    <td>"</td>
+                    <td>310.3</td>
+                    <td>0.00117</td>
+                    <td>29.323</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>17</td>
+                    <td>"</td>
+                    <td>0.006</td>
+                    <td>"</td>
+                    <td>344.3</td>
+                    <td>0.00120</td>
+                    <td>29.191</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>14</td>
+                    <td>"</td>
+                    <td>0.007</td>
+                    <td>"</td>
+                    <td>289.1</td>
+                    <td>0.00120</td>
+                    <td>29.192</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>15</td>
+                    <td>"</td>
+                    <td>0.008</td>
+                    <td>"</td>
+                    <td>339.1</td>
+                    <td>0.00132</td>
+                    <td>28.798</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>16</td>
+                    <td>"</td>
+                    <td>0.009</td>
+                    <td>"</td>
+                    <td>333.7</td>
+                    <td>0.00121</td>
+                    <td>29.187</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>7</td>
+                    <td>"</td>
+                    <td>0.02</td>
+                    <td>"</td>
+                    <td>302.6</td>
+                    <td>0.00156</td>
+                    <td>28.056</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>8</td>
+                    <td>"</td>
+                    <td>0.05</td>
+                    <td>"</td>
+                    <td>298.9</td>
+                    <td>0.00242</td>
+                    <td>26.166</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>9</td>
+                    <td>"</td>
+                    <td>0.1</td>
+                    <td>"</td>
+                    <td>298.8</td>
+                    <td>0.00453</td>
+                    <td>23.444</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>10</td>
+                    <td>"</td>
+                    <td>1</td>
+                    <td>"</td>
+                    <td>290.7</td>
+                    <td>0.218</td>
+                    <td>6.621</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>17</td>
+                    <td>"</td>
+                    <td>0.005</td>
+                    <td>3000 Epochs, 10k Batch, 7 linear layers, Hidden Dimension 256</td>
+                    <td>503.2</td>
+                    <td>0.000903</td>
+                    <td>30.444</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>18</td>
+                    <td>"</td>
+                    <td>0.01</td>
+                    <td>3000 Epochs, 10k Batch, 7 linear layers, Hidden Dimension 1024</td>
+                    <td>1004.2</td>
+                    <td>0.000726</td>
+                    <td>31.390</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>21</td>
+                    <td>"</td>
+                    <td>0.0001</td>
+                    <td>3000 Epochs, 10k Batch, 7 linear layers, Hidden Dimension 512, Only one BatchNorm after first liner layer</td>
+                    <td>800.2</td>
+                    <td>0.00153</td>
+                    <td>28.144</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>19</td>
+                    <td>"</td>
+                    <td>0.005</td>
+                    <td>3000 Epochs, 10k Batch, 7 linear layers, Hidden Dimension 1024, Only one BatchNorm after first liner layer</td>
+                    <td>788.2</td>
+                    <td>0.000696</td>
+                    <td>31.574</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>20</td>
+                    <td>"</td>
+                    <td>0.01</td>
+                    <td>"</td>
+                    <td>896.1</td>
+                    <td>0.213</td>
+                    <td>6.713</td>
+                    <td></td>
+                  </tr>       
+                  <tr>
+                    <td>22</td>
+                    <td>"</td>
+                    <td>0.001</td>
+                    <td>3000 Epochs, 10k Batch, 12 linear layers, Hidden Dimension 512, NO BatchNorm</td>
+                    <td>1699.7</td>
+                    <td>0.000591</td>
+                    <td>32.283</td>
+                    <td>TRIUMPH!</td>
+                  </tr>           
+                </tbody>
+              </table>
+              * Training includes some time for saving checkpoints.
+            </center>
+            After (more than) 22 experiments, it finally worked... AFTER I REMOVED THE BATCHNORMS.... OMG... if I had just trusted the instructions from the beginning and followed them to a tea... I would've gotten it. I don't know why I tried to be fancy. I have learned my lesson. There are many other things I still don't know though, like how my losses and PSNR with and without the batch norms look pretty similar, but somehow without the batchnorms I'm getting coherent images and with the batchnorms my images just look blurry!! I've placed my final video in my gallery. <br/><br/>
+
+            After all of this, I decided to redo my hyperparameter search without the batchnorms, which I've included in my report for this section.
+        </details>
+        <details>
+          <summary>1. Started Project</summary>
+          You can use these dropdown arrows to check out what happened at each step!
+        </details>        
+        </dd>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>CS 180 Project 2 Report</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+      body {
+        font-family: 'Merriweather';
+        padding: 5%;
+      }
+      a {
+        text-decoration: none;
+        color: green;
+      }
+
+      .container {
+          display: grid;
+          grid-template-columns: 1fr 4fr;
+          gap: 10px;
+      }
+      .column {
+          padding: 10px;
+      }
+      .green-border {
+          border-right: 1px solid yellowgreen;
+      }
+      .widget {
+          position: sticky;
+          top: 0;
+          align-self: start;
+          padding-top: 10%;
+      }
+      .divider {
+          border: 1px solid yellowgreen;
+      }
+    </style>
+
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <script type="text/javascript">
+      window.MathJax = {
+        tex: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+          macros: {
+            "\Z": "\\mathbb{Z}",
+            "\Hom": "\\mathrm{Hom}",
+            "\Aut": "\\mathrm{Aut}",
+            "\null": "\\mathrm{null}",
+            "\R": "\\mathbb{R}",
+            "\N": "\\mathbb{N}",
+            "\Q": "\\mathbb{Q}",
+            "\Primes": "\\mathbb{P}",
+            "\C": "\\mathbb{C}",
+            "\F": "\\mathbb{F}",
+            "\D": "\\mathbb{D}",
+            "\Hart": "\\mathbb{H}",
+            "\Cat": "\\mathsf{Cat}",
+            "\CAT": "\\mathsf{CAT}",
+            "\CatC": "\\mathsf{CatC}",
+            "\CatD": "\\mathsf{CatD}",
+            "\CatE": "\\mathsf{CatE}",
+            "\CSet": "\\mathsf{Set}",
+            "\CGrp": "\\mathsf{Grp}",
+            "\CRing": "\\mathsf{Ring}",
+            "\CCRing": "\\mathsf{CRing}",
+            "\CMod": "\\mathsf{Mod}",
+            "\lendshow": "\\square",
+            "\tendshow": "\\blacksquare"
+          }
+        },
+        options: {
+          renderActions: {
+            addMenu: [],
+            checkLoading: []
+          },
+          ignoreHtmlClass: 'tex2jax_ignore',
+          processHtmlClass: 'tex2jax_process'
+        },
+        loader: {load: ['[tex]/ams']},
+        startup: {
+          ready: () => {
+            window.MathJax.startup.defaultReady();
+          }
+        }
+      };
+    </script>
+  </head>
+  <body>
+    <a href="..">Back to All Projects</a>
+    <h1>CS 180 Project 2 Report</h1>
+    <b>Aathreya Kadambi</b>
+
+    <p>I've always wondered how to best visualize the impact of a finite difference operator.</p>
+
+    <div class="container">
+      <div class="column green-border">
+        <div class="widget">
+          <div class="divider"></div>
+          <h3><a href="#gallery">Gallery</a></h3>
+          <div class="divider"></div>
+          <h3><a href="#fd-and-dog">FD and DoG Filters</a></h3>
+          <div class="divider"></div>
+          <h3><a href="#image-sharpening">Image Sharpening</a></h3>
+          <div class="divider"></div>
+          <h3><a href="#hybrid">Hybrid Images</a></h3>
+          <div class="divider"></div>
+          <h3><a href="#log">Log</a></h3>
+        </div>
+      </div>
+      <div class="column">
+        <h2 id="gallery">Gallery</h2>
+    
+        <h2 id="fd-and-dog">FD and DoG Filters</h2>
+        The central idea behind this part is that derivatives and gradients can be used as "edge detectors" in images because edges occur where colors change rapidly. Take this image:
+        <center>
+          <img src="img/cameraman.png" width="45%" />
+        </center>       
+        Since images are multidimensional, we can take partial derivatives/differences in each direction by doing a convolution, which yields the following: (left is $x$ direction, right is $y$ direction)
+        <center>
+          <img src="img/dx-filter-1.1.png" width="45%" />
+          <img src="img/dy-filter-1.1.png" width="45%" />
+        </center>
+        Looking closely, we can see that for the $x$-direction filter, darker portions are left edges, and lighter portions are right edges.
+        
+        We instead look at the gradient which is more representative of rapid changes in any direction. This way, we can obtain edges in general. We compute the gradient at a pixel $p_{x,y}$ to be: 
+        <center>$\sqrt{D_x p_{x,y}^2 + D_y p_{x,y}^2}$</center>
+        where $D_x p_{x,y} = p_{x,y} - p_{x+1, y}$ and $D_y p_{x,y} = p_{x,y} - p_{x,y+1}$. Computationally, $D_x p$ and $D_y p$ are found by convolving $p$ (the image) with <code>[[1,-1]]</code> (we henceforth denote $D_x$ via notation abuse) and <code>[[1], [-1]]</code> (we henceforth denote $D_y$ via notation abuse). In other words,
+        <center>$(D_x * p)_{x,y} = p_{x,y} - p_{x-1, y}$</center>
+        <center>$(D_y * p)_{x,y} = p_{x,y} - p_{x,y-1}$</center>
+        
+        And then threshold to get rid of noise, we get the following binarized image:
+        <center>
+          <img src="img/thresholded.png" width="45%" />
+        </center>
+        which isn't too bad! We've detected the edges. But there is much room for improvement, since there is still much noise, and the edges don't look to be continuous.
+
+        To deal with this, we first blur our images. Applying a Gaussian blur "smudges" the images, so random sharp gradients will get damped much more, whereas sharp gradients which occur near others (forming an "edge") will be damped less. We first create a Gaussian filter $G$, and compute the blurred image $G * p$. Then convolving $D_x$ and $D_y$ with $G * p$ and computing the gradients as done before, we obtain:
+        <center>
+          <img src="img/thresholded-1.2.png" width="45%" />
+        </center>
+        This looks great! The edges are much more clear, and there's much less noise.
+
+        Now something to notice is that $D_x * (G * p) = (D_x * G) * p$ by associativity of the convolution operation (with some potential kinks, but we'll ignore this here), so it makes sense to compute $D_x * G$ and $D_y * G$ first, and then apply these directly to $p$. This yields:
+        <center>
+          <img src="img/thresholded-1.2-2.png" width="45%" />
+        </center>
+        which again, looks pretty cool.
+
+        <h2 id="image-sharpening">Image Sharpening</h2>
+
+        I was able to apply a Gaussian blur to the original Taj Mahal to obtain the image on the right, after which I subtracted and normalized as <code>(image - alpha * blurred) / (1-alpha)</code>. This got the following results with <code>alpha = 0.5</code>:
+        <center>
+          <img src="img/taj-mahal.png" width="45%" />
+          <img src="img/taj-mahal-blurry.png" width="45%" />
+          <img src="img/taj-mahal-0.5.png" width="45%" />
+        </center>
+        By the properties of convolution and denoting $I$ to be the kernel such that $I * p = p$ for any image $p$, 
+        <center>$$(p - \alpha G * p)/(1-\alpha) = \left(\frac{1}{1-\alpha}\left(I - \alpha G\right)\right) * p$$</center>
+        and $(\frac{1}{1-\alpha}(I - \alpha G))$ becomes our "sharpening kernel". Applying this to other images, we obtain the following:
+        <center>
+          <img src="img/stratonovich.png" width="45%" />
+          <img src="img/stratonovich-sharp.png" width="45%" />
+        </center>
+        We can see the difference between these two images by subtracting them (and magnifying the difference to be more visible):
+        <center>
+          <img src="img/stratonovich-diff.png" width="45%" />
+        </center>
+        Notice how this seems to capture the edges of the image! 
+        <center>
+          <img src="img/board-game.png" width="45%" />
+          <img src="img/board-game-sharp.png" width="45%" />
+        </center>
+        And looking at the difference:
+        <center>
+          <img src="img/board-game-diff.png" width="45%" />
+        </center>
+        we can better see which parts of the image were impacted. Now consider a sharp image:
+        <center>
+          <img src="img/aath-funny.png" width="45%" />
+          <img src="img/aath-funny-sharp.png" width="45%" />
+        </center>
+        And looking at the difference:
+        <center>
+          <img src="img/aath-funny-diff.png" width="45%" />
+        </center>
+        we can better see which parts of the image were impacted.
+
+        <h2 id="hybrid">Hybrid Images</h2>
+
+        <h2 id="log">Log</h2>
+        <dd>
+        <details>
+          <summary>3.1. Image Sharpening</summary>
+          I gaussian blurred the Taj Mahal image with a kernel size of 7 and then subtracted from the original factor with a weight of <code>alpha</code> being 0.3 and 0.5. I got the following images:
+          <center>
+            <img src="img/taj-mahal-0.3.png" width="45%" />
+            <img src="img/taj-mahal-0.5.png" width="45%" />
+          </center>
+          We can clearly see improvement from the initial Taj Mahal image:
+          <center>
+            <img src="img/taj-mahal.png" width="45%" />
+          </center>
+          I also got this funky version of the image when using an excessively high alpha, probably due to clipping and noise:
+          <center>
+            <img src="img/taj-mahal-0.999.png" width="45%" />
+          </center>
+        </details>
+        <details>
+          <summary>2.2. Derivative of Gaussian Filter</summary>
+          I've heard that it's best to use kernel sizes of 3 or 5 or some other small number, so I chose to use a kernel size of 5. The blurred image looks like:
+          <center>
+            <img src="img/blurred-image.png" width="45%" />
+          </center>
+          After doing the same procedure as before on this blurred image, I got the following clearer outline:
+          <center>
+            <img src="img/thresholded-1.2.png" width="45%" />
+          </center>
+          I can then make these "DoG" filters by convolving the gaussian kernel with the finite difference kernels. The fundamental idea behind doing this is that convolution is an associative operation, so we can just merge the differencing and convolution operations. 
+          <center>
+            <img src="img/dogx.png" width="45%" />
+            <img src="img/dogy.png" width="45%" />
+          </center>
+          Applying these combined filters yields the same result (albeit with a slightly different threshold... for some reason).
+          <center>
+            <img src="img/dog-filtered-im.png" width="45%" />
+          </center>
+          <center>
+
+          </center>
+        </details>
+        <details>
+          <summary>2.1. Finite Difference Operator</summary>
+          Finished the finite difference operator section. First, I applied convolutions to take the partial derivatives in the $x$ and $y$ directions, which got me:
+          <center>
+            <img src="img/dx-filter-1.1.png" width="45%" />
+            <img src="img/dy-filter-1.1.png" width="45%" />
+          </center>
+          from which we can see that the change in pixel value is a good indicator of whether there is an edge there. So we take the gradient magnitude:
+          <center>
+            <img src="img/grad-mag.png" width="45%" />
+          </center>
+          and finally threshold to remove some noise manually:
+          <center>
+            <img src="img/thresholded.png" width="45%" />
+          </center>
+        </details>  
+        <details>
+          <summary>1. Started Project</summary>
+          You can use these dropdown arrows to check out what happened at each step!
+        </details>        
+        </dd>
+      </div>
+    </div>
+  </body>
+</html>

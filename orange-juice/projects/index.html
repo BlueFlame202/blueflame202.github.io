@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Projects</title>
+    <!--<script id="mathjax" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-mml-chtml.min.js"></script>-->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"></link>
+    <link rel="icon" type="image/png" sizes="32x32" href="../img/favicon-32x32.png"></link>
+    <link rel="icon" type="image/png" sizes="16x16" href="../img/favicon-16x16.png"></link>
+    <link rel="manifest" href="/site.webmanifest" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="../orange-juice.css">
+
+    <script type="text/javascript">
+      window.MathJax = {
+        tex: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+          macros: {
+            "\Z": "\\mathbb{Z}",
+            "\Hom": "\\mathrm{Hom}",
+            "\Aut": "\\mathrm{Aut}",
+            "\null": "\\mathrm{null}",
+            "\R": "\\mathbb{R}",
+            "\N": "\\mathbb{N}",
+            "\Q": "\\mathbb{Q}",
+            "\Primes": "\\mathbb{P}",
+            "\C": "\\mathbb{C}",
+            "\F": "\\mathbb{F}",
+            "\D": "\\mathbb{D}",
+            "\Hart": "\\mathbb{H}",
+            "\Cat": "\\mathsf{Cat}",
+            "\CAT": "\\mathsf{CAT}",
+            "\CatC": "\\mathsf{CatC}",
+            "\CatD": "\\mathsf{CatD}",
+            "\CatE": "\\mathsf{CatE}",
+            "\CSet": "\\mathsf{Set}",
+            "\CGrp": "\\mathsf{Grp}",
+            "\CRing": "\\mathsf{Ring}",
+            "\CCRing": "\\mathsf{CRing}",
+            "\CMod": "\\mathsf{Mod}",
+            "\lendshow": "\\square",
+            "\tendshow": "\\blacksquare"
+          }
+        },
+        options: {
+          renderActions: {
+            addMenu: [],
+            checkLoading: []
+          },
+          ignoreHtmlClass: 'tex2jax_ignore',
+          processHtmlClass: 'tex2jax_process'
+        },
+        loader: {load: ['[tex]/ams']},
+        startup: {
+          ready: () => {
+            window.MathJax.startup.defaultReady();
+          }
+        }
+      };
+    </script>
+
+    <style>
+        .software {
+            color: green;
+        }
+
+        .report-presentation {
+            color: orange;
+        }
+
+        .other {
+            color: rgb(120, 224, 212);
+        }
+    </style>
+    
+  </head>
+    <body>
+      <div>
+        <h1>Projects</h1>
+        <span><a href="." style="text-decoration: none; color:black;"><b>Making Ideas Tangible</b></a></span>
+        <span style="float: right;"><a href="../">🧃</a> <a href="../">↑</a> <a href=""></a> <a href="../nowhere">research</a> <a href="./">projects</a> <a href="../thoughts">thoughts</a> <a href="../travels">travels</a></span>
+      </div>
+
+        <p>
+            Here are some fun projects I was involved with.
+        </p>
+        <p>If you are color blind, this may be strange to view. Click this checkbox to enable a color-free version: <input type="checkbox" id="colorfree" name="colorfree" value="color"></p>
+
+        <script>
+            const checkbox = document.getElementById('colorfree');
+            function updateDivVisibility() {
+                const color = document.getElementById('color-version');
+                const nocolor = document.getElementById('colorfree-version');
+                if (checkbox.checked) {
+                    color.style.display = 'none';
+                    nocolor.style.display = 'block';
+                } else {
+                    nocolor.style.display = 'none';
+                    color.style.display = 'block';
+                }
+            }
+            checkbox.addEventListener('change', updateDivVisibility);
+            updateDivVisibility();
+        </script>
+
+        <div id="color-version" style="display: block;">
+            <span><b>Key:</b></span>
+            <ul style="margin-top: 0;">
+                <li><span class="software">Software: Green</span></li>
+                <li><span class="report-presentation">Reports and Presentations: Orange</span></li>
+                <li><span class="other">Other Projects: Aquamarine</span></li>
+            </ul>
+            <span><b>In Progress:</b></span>
+            <ul style="margin-top: 0;">
+              <li><a href="sketches" class="other">Sketches</a> (Personal)</li>
+              <li><a class="other" href="https://github.com/BlueFlame202/lemonade/tree/master">Lemonade</a> and <a class="other" href="/orange-juice/">Orange Juice</a> (My Websites)</li>
+            </ul>
+            <span><b>Completed Projects:</b></span>
+            <ul style="margin-top: 0;">
+              <li><span class="software">Modeling Radiative Transport</span> (TAMU 2024 Undergraduate Summer School about Modeling and Simulation with PDEs)</li>
+              <li><a href="cs180" class="other">Computer Vision Projects</a> (UCB CS 180)</li>
+              <li><a href="https://www.youtube.com/watch?v=0chMA3DOxe0&t=3s" class="software">Cats and Monsters</a> (UCB CS 61BL)</li>
+              <li><a href="final-projects/UCB_MATH_H185_Final_Project_Notes.pdf" class="report-presentation">Notes for a talk/project on \(p\)-adic Numbers, Analysis, and \(\zeta\)-function</a> (UCB MATH H185)</li>
+              <li><a href="https://github.com/BlueFlame202/darth-vader-py" class="software">DARTH VADER</a> (URAP with Professor Anastassia Fedyk, Sentiment Analysis)</li>
+              <li><a href="https://github.com/BlueFlame202/vader-cpp" class="software">VADER C++</a> (URAP with Professor Anastassia Fedyk, Sentiment Analysis)</li>
+              <li><a href="https://aathreyakadambi.rf.gd/classes/final-projects/pick-up-coils.pdf" class="report-presentation">Making an Electric Guitar Pickup Coil</a> (UCB PHYSICS 5BL)</li>
+              <li><a href="https://github.com/BlueFlame202/Spectroscopy/blob/main/imgs/Output/Accuracy03-29-20.PNG" class="software">Spectroscopy at Home</a> (Personal)</li>
+            </ul>       
+            
+            <p>For other software, see my GitHub: <a href="https://github.com/BlueFlame202" class="software">Teleport!</a></p>
+        </div>
+        <div id="colorfree-version" style="display: none;">
+            <span><b>Key:</b></span>
+            <ul style="margin-top: 0;">
+                <li><span>S: Software</span></li>
+                <li><span>RP: Reports and Presentations</span></li>
+                <li><span>O: Other Projects</span></li>
+            </ul>
+            <span><b>In Progress:</b></span>
+            <ul style="margin-top: 0;">
+              <li>O: <a href="sketches">Sketches</a> (Personal)</li>
+              <li>O: <a href="https://github.com/BlueFlame202/lemonade/tree/master">Lemonade</a> and <a href="/orange-juice/">Orange Juice</a> (My Websites)</li>
+            </ul>
+            <span><b>Completed Projects:</b></span>
+            <ul style="margin-top: 0;">
+                <li>S: <span>Modeling Radiative Transport</span> (TAMU 2024 Undergraduate Summer School about Modeling and Simulation with PDEs)</li>
+                <li>O: <a href="cs180">Computer Vision Projects</a> (UCB CS 180)</li>
+                <li>S: <a href="https://www.youtube.com/watch?v=0chMA3DOxe0&t=3s">Cats and Monsters</a> (UCB CS 61BL)</li>
+                <li>RP: <a href="final-projects/UCB_MATH_H185_Final_Project_Notes.pdf">Notes for a talk/project on \(p\)-adic Numbers, Analysis, and \(\zeta\)-function</a> (UCB MATH H185)</li>
+                <li>S: <a href="https://github.com/BlueFlame202/darth-vader-py">DARTH VADER</a> (URAP with Professor Anastassia Fedyk, Sentiment Analysis)</li>
+                <li>S: <a href="https://github.com/BlueFlame202/vader-cpp">VADER C++</a> (URAP with Professor Anastassia Fedyk, Sentiment Analysis)</li>
+                <li>RP: <a href="https://aathreyakadambi.rf.gd/classes/final-projects/pick-up-coils.pdf">Making an Electric Guitar Pickup Coil</a> (UCB PHYSICS 5BL)</li>
+                <li>S: <a href="./">Spectroscopy at Home</a> (Personal)</li>
+            </ul>       
+            
+            <p>For other software, see my GitHub: <a href="https://github.com/BlueFlame202">Teleport!</a></p>
+        </div>
+        
+    </body> 
+</html>

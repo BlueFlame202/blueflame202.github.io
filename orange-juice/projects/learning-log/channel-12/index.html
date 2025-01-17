@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Thai Tea</title>
+    <meta charset="UTF-8">
+    <!--<script id="mathjax" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-mml-chtml.min.js"></script>-->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"></link>
+    <link rel="icon" type="image/png" sizes="32x32" href="../../img/favicon-32x32.png"></link>
+    <link rel="icon" type="image/png" sizes="16x16" href="../../img/favicon-16x16.png"></link>
+    <link rel="manifest" href="/site.webmanifest" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="../../orange-juice.css">
+
+    <script type="text/javascript">
+      window.MathJax = {
+        tex: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+          macros: {
+            "\Z": "\\mathbb{Z}",
+            "\Hom": "\\mathrm{Hom}",
+            "\Aut": "\\mathrm{Aut}",
+            "\null": "\\mathrm{null}",
+            "\R": "\\mathbb{R}",
+            "\N": "\\mathbb{N}",
+            "\Q": "\\mathbb{Q}",
+            "\Primes": "\\mathbb{P}",
+            "\C": "\\mathbb{C}",
+            "\F": "\\mathbb{F}",
+            "\D": "\\mathbb{D}",
+            "\Hart": "\\mathbb{H}",
+            "\Cat": "\\mathsf{Cat}",
+            "\CAT": "\\mathsf{CAT}",
+            "\CatC": "\\mathsf{CatC}",
+            "\CatD": "\\mathsf{CatD}",
+            "\CatE": "\\mathsf{CatE}",
+            "\CSet": "\\mathsf{Set}",
+            "\CGrp": "\\mathsf{Grp}",
+            "\CRing": "\\mathsf{Ring}",
+            "\CCRing": "\\mathsf{CRing}",
+            "\CMod": "\\mathsf{Mod}",
+            "\lendshow": "\\square",
+            "\tendshow": "\\blacksquare"
+          }
+        },
+        options: {
+          renderActions: {
+            addMenu: [],
+            checkLoading: []
+          },
+          ignoreHtmlClass: 'tex2jax_ignore',
+          processHtmlClass: 'tex2jax_process'
+        },
+        loader: {load: ['[tex]/ams']},
+        startup: {
+          ready: () => {
+            window.MathJax.startup.defaultReady();
+          }
+        }
+      };
+    </script>
+  </head>
+    <body>
+        <a href="../"><i>Back to Thai Tea</i></a>
+        <h1 className="title">Channel 12</h1>
+            <p><b>Convex Optimization</b></p>
+            <hr/>
+            <p><b>October 3rd, 2024</b></p>
+            <p>Right now, I'm taking notes from Ben Recht's convex optimization class, where he is talking about inverse problems. 
+            <ol>
+                <li>$A$ is our measurements, $x$ is the state we want, and $y$ is our observation. We have to do some work to get from $y$ to $x$.</li>
+                <li>Measurements can have <i>noise</i> (we denote $w$) and they can be <i>lossy</i>.</li>
+                <li>Examples: Photographs, blurring (convolution), CT scans, reading from an array is a loss measurement.</li>
+                <li>Our model might look like $y = Ax + w$.</li>
+                <li>We can view his as a convex optimization problem:
+                    <center>$$\min (1-h) \Phi(w) + h\Psi(x)$$</center>
+                    <center>$$\text{s.t. }y = Ax + w$$</center>
+                    where we call $\Phi$ and $\Psi$ "implausibility" functions.
+                </li>
+                <li>Most often than not we just use norms for the implausibility functions $\Phi$ and $\Psi$. Some choices are $\|\cdot \|_2$ if you don't want to be preferential towards direction, $\|\cdot\|_1$ if you want to induce sparsity, and $\text{nnz}$ the number of nonzeros.</li>
+                <ul>
+                    <li><i>Choice of implausibility function for $w$:</i> One can use a <b>Huber loss</b> in order to weight the impact of spikes in the noise part less. We can actually derive the Huber loss from considering a noise-only problem and solving this infimum problem thing.</li>
+                    <li><i>Choice of implausibility function for $x$:</i></li> 
+                    <li>Gague function, $\mathcal{A}$ atoms, $x \in \mathcal{A}$, $\|z\|_{\mathcal{A}} = \inf\{\sum_{i=1}^m |c_i| : z = \sum_{i=1}^m c_i a_i, a_i \in \mathcal{A}\}$ the atoms are what you think are simplest. for example, sparsityone, or maybe corners of the hypercube. You can get so many different norms by choosing different atoms in $\mathcal{A}$.</li>
+                </ul>
+            </ol></p>
+            <hr/>
+            
+            
+    </body> 
+</html>

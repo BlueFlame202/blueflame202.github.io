@@ -1,0 +1,299 @@
+<html lang="en">
+    <head>
+      <meta charset="UTF-8">
+        <title>It Turns Out Measure Theory Actually <i>Is</i> Useful</title>
+        <!--<script id="mathjax" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-mml-chtml.min.js"></script>-->
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+        <link rel="apple-touch-icon" sizes="180x180" href="../../img/apple-touch-icon.png"></link>
+        <link rel="icon" type="image/png" sizes="32x32" href="../../img/favicon-32x32.png"></link>
+        <link rel="icon" type="image/png" sizes="16x16" href="../../img/favicon-16x16.png"></link>
+        <link rel="manifest" href="/site.webmanifest" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+        <script type="text/javascript">
+          window.MathJax = {
+            tex: {
+              inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+              displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+              macros: {
+                "\Z": "\\mathbb{Z}",
+                "\Hom": "\\mathrm{Hom}",
+                "\Aut": "\\mathrm{Aut}",
+                "\null": "\\mathrm{null}",
+                "\R": "\\mathbb{R}",
+                "\N": "\\mathbb{N}",
+                "\Q": "\\mathbb{Q}",
+                "\Primes": "\\mathbb{P}",
+                "\C": "\\mathbb{C}",
+                "\F": "\\mathbb{F}",
+                "\D": "\\mathbb{D}",
+                "\Hart": "\\mathbb{H}",
+                "\Cat": "\\mathsf{Cat}",
+                "\CAT": "\\mathsf{CAT}",
+                "\CatC": "\\mathsf{CatC}",
+                "\CatD": "\\mathsf{CatD}",
+                "\CatE": "\\mathsf{CatE}",
+                "\CSet": "\\mathsf{Set}",
+                "\CGrp": "\\mathsf{Grp}",
+                "\CRing": "\\mathsf{Ring}",
+                "\CCRing": "\\mathsf{CRing}",
+                "\CMod": "\\mathsf{Mod}",
+                "\lendshow": "\\square",
+                "\tendshow": "\\blacksquare"
+              }
+            },
+            options: {
+              renderActions: {
+                addMenu: [],
+                checkLoading: []
+              },
+              ignoreHtmlClass: 'tex2jax_ignore',
+              processHtmlClass: 'tex2jax_process'
+            },
+            loader: {load: ['[tex]/ams']},
+            startup: {
+              ready: () => {
+                window.MathJax.startup.defaultReady();
+              }
+            }
+          };
+        </script>
+        <link rel="stylesheet" href="https://www.ocf.berkeley.edu/~aathreyak/orange-juice/orange-juice.css">
+      </head>
+    <body>
+    
+        <main>
+            <p><i>Did you get here from lemonade? If you're lost, <a href="https://aathreyakadambi.vercel.app/blog">click here</a> to go back...</i></p>
+            <a href="../"><i>See all sketches...</i></a>
+            <h1 className="title">Sketch 7</h1>
+            <p><b>It Turns Out Measure Theory Actually Is Useful</b></p>
+            <hr/>
+            <h2>Huh...</h2>
+            <p>I was motivated to make this note because I was confused about why we need to use measure theory to study probability. What kinds of questions does probability theory ask that inspire a measure theoretic approach?</p>
+
+            <p>If you are reading this without having seen any measure theory (to be honest it's probably best to see a bit of measure theory first), I want to write it in a way that is understandable by people who have taken basic probability, so here are some terms I may use that are not too complicated intuitively to understand:</p>
+<ul>
+<li><strong>Measurable:</strong> A set is measurable if we want to and can "measure" the probability of that set occuring. For example, the set $\{(R,R), (R, P)\}$ is "measurable" below, in the sense that we can find the probability of the event "both players play rocks OR the first player plays rock and the second player plays paper".</li>
+<li><strong>$\sigma$-algebra:</strong> This is essentially the collection of sets which are measurable. Do note that while I motivate things backwards, we generally start by making a $\sigma$-algebra, and then defining all the sets in that $\sigma$-algebra to be measurable.</li>
+<li><strong>Power set:</strong> The set of all subsets of a set.</li>
+</ul>
+<p>If you find any other complicated-sounding terms I didn't define above, let me know at <a href="mailto:aathreyakadambi@gmail.com">aathreyakadambi@gmail.com</a>. To be honest, I anticipate a good number of complaints.</p>
+
+            <p>
+                <b>Date Started:</b> June 20, 2024<br />
+                <b>Date Finished:</b> <i>June 20, 2024</i>
+            </p>
+
+            <i>September 23, 2024 Update:</i> It turns out that the idea I was discussing in this post was actually something called the Borel-Kolmogorov paradox.
+
+            <img src="sketch.jpeg" style="display: block; margin-left: auto; margin-right: auto; max-width: 45%;" alt"="The Sketch">
+
+            <h2>An Example of Measure Theoretic Notation on A Classical Problem</h2>
+
+            <p>
+              Let's examine a game of rock-paper-scissors. We have two players. They play five games, and the person who one the most games wins.</p>
+
+<p>We want to know what strategies the players should use. How do we write our model for this in the language of measure theory? Here's one idea. Since each round is independent, it suffices to figure out what probabilities the players should play with to maximize their chances of winning on an individual round. Suppose the first player plays R, P, and S with probabilities $x_R$, $x_P$, and $x_S$, and the second player plays them with probabilities $y_R$, $y_P$, and $y_S$. </p>
+
+<p>Our sample space here is the 9-element space: $\Omega = \{R, P, S\} \times \{R, P, S\}$, representing the pairs for what each player plays. On this set, we define a $\sigma$-algebra $\mathcal{F}$, the power set of $X$, since we would like each individual pair in the set to be measurable, which then forces every set in the power set to be measurable. Finally, we define the measure $P$ on $\mathcal{F}$ by:
+$$P(S) = \sum_{(A,B) \in S} x_Ay_B$$
+            </p>
+
+            <p>
+              Now whether the first player wins, loses, or ties is determined by the indicator random variable:
+$$X : \Omega \rightarrow \mathbb{R}, \qquad X(\omega) = \left\{\begin{array}{cl} 1 & \text{if }\omega \in \{(R,S), (P,R), (S,P)\}, \\ 0 & \text{if }\omega \in \{(R,R), (P, P), (S,S)\},\\ -1 & \text{else.}\end{array}\right.$$
+            </p>
+
+            <p>
+              We can compute the expected payoff for the first player as $E[X] = \int_\Omega X \; dP = P(X^{-1}(1)) - P(X^{-1}(-1))$ (since $X$ is just a simple function).
+\[
+\begin{align*}
+E[X] &= P(\{(R,S)\}) + P(\{(P,R)\}) + P(\{(S,P)\}) - P(\{(S,R)\}) - P(\{(R,P)\}) - P(\{(P,S)\})\\
+&= x_Ry_S + x_Py_R + x_S y_P - x_S y_R - x_R y_P - x_P y_S
+\end{align*}
+\]
+We can even understand conditional expectation with our language, although I'm going to half-lie to you for a second for the sake of your sanity. If we know for example that $\omega_2 = P$, or that the second player chooses to play paper, then that restricts our sample space! We know now that the only possibilities are $\Omega' := \{(S,P), (P,P), (R,P)\}$, so taking expectation on our new sample space and restricting our measure to a new measure $P'$ (we have to divide it by $P(\Omega')$ to ensure that $P'(\Omega') = 1$), we obtain:
+\[
+\begin{align*}
+E[X|\omega_2=P] = \int_{\Omega'} (X|_{\Omega'}) \; dP' = P'((X|_{\Omega'})^{-1}(1)) - P'((X|_{\Omega'})^{-1}(-1)) &= P'(\{(S,P)\}) - P'(\{(R,P)\})\\
+&= \dfrac{P(\{(S,P)\})}{P(\Omega')} + \dfrac{P(\{(R,P)\})}{P(\Omega')}\\
+&= \dfrac{x_S y_P - x_Ry_P}{x_S y_P + x_P y_P + x_R y_P}
+\end{align*}
+\]
+This isn't really a lie since all I have done is motivated and used Bayes rule to compute conditional probabilities from which I computed conditional expectation, but at the same time, this isn't the definition I've seen in the wild (except for maybe in Rosenthal).
+            </p>
+
+            <p>
+              Now what is the best mixed strategy for the first player? I won't explain the details here, but we can proceed with the usual computations to find the best mixed strategy:
+$$\max_{x_R,x_P,x_S} \min_{\omega_2 \in \{R, P, S\}} E[X | \omega_2 = P]$$
+which we can solve with a linear program (a problem from our CS 170 class at Berkeley!).
+            </p>
+
+            <p>
+              So far here, note that we haven't actually needed measure theory for anything. All of the ideas come from the idea of Bayes rule and classic ideas of probability, just wrapped in the language of measure theory. But that's not "needing" measure theory, that's just wanting to make simple things fancier.
+            </p>
+
+            <h2>The Need for Measure Theory</h2>
+
+            <p>In the above problem, we saw how the expectation of our random variable became simply the integral over a simple function. If all our random variables are simple functions, the theory reduces so that there is no need for more advanced machinery.</p>
+
+            <p>In fact, our $\sigma$-algebra itself is very simple in this case. All sets in our $\sigma$-algebra are countable, and all singletons are measurable. This means that <i>all</i> functions out of $\Omega$ are simple! As such, with the language of measure theory, we get a more sophisticated integration theory that allows us to consider more complex random variables.</p>
+
+            <p>
+              In any case, to see a more illustrative example of where measure theory is more practical, it thus makes sense to consider cases where our $\sigma$-algebras are more complicated. 
+            </p>
+
+            <h2>Where Bayes' Rule Breaks Down</h2>
+
+            <p>I have spent half of today plagued by a horrible and painful misunderstanding, and I think I finally understand it. All my life, I have thought of the expected value of a random variable as an "average". In other words, it is just one real number.</p>
+
+            <p>I was absolutely (as opposed to conditionally ;) confused when I read in Appendix B of Oksendal that the expected value with respect to a $\sigma$-algebra is actually a random variable? First of all, since when have we been taking expected values with respect to $\sigma$-algebras, like I clearly wasn't around when everyone decided to do that, or I might have protested? Second of all, why is the result a random variable? In what sense is that an average? Not only that, but Oksendal goes on to state in Theorem B.2:
+              $$E[X| \mathcal{H}] = E[X]$$
+              if $X$ is independent of $\mathcal{H}$. And he defines $E[X]$ as $\int_{\Omega} X(\omega) \; dP(\omega)$. So clearly, $E[X] \in \R^n$, and $E[X|\mathcal{H}] \in \text{Maps}(\Omega \rightarrow \R^n)$. So the equality above has to be abuse of notation, which confused me even more. What is going on?</p>
+
+              <p>Of course, if you know what you're doing, that all makes sense. But the key is actually a subtle change in perspective.</p>
+              
+              <p>When I lied back in the first section, I was viewing conditional probability as taken by restricting your sample space. In other words, it comes from the following perspective:</p>
+
+              <p><b>Idea: When you gain information, you restrict your sample space.</b></p>
+
+              <p>In that perspective, once we know that the first player picks paper, our sample space "collapses" into $\Omega' = \{(R,P), (P,P), (S,P)\}$, our $\sigma$-algebra becomes restricted to just $\mathcal{F}' = \mathcal{P}(\Omega')$ (the power set of $\Omega'$), and our probability measure simply scales up by $\frac{1}{P(\Omega')}$ to preserve the property that it is a <i>probability</i> measure (Bayes rule). Then we get a new "probability measure". For any set in the original $\sigma$-algebra which is not in $\mathcal{P}(\Omega')$, we can assign it to have measure zero, and now we can define: $E[X | S] = \int_{\Omega} X(\omega) dP'(\omega) = \int_{\Omega'} X(\omega) dP'(\omega)$ where $S$ is a set in $\mathcal{F}$.</p>
+
+              <p>
+Now there is another perspective which motivates the perspective in Oksendal.
+              </p>
+
+              <p><b>Idea: When you gain information, you add to your $\sigma$-algebra, which allows you to resolve functions better.</b></p>
+
+              <p>In this perspective, our entire model is different than what I had discussed above! We define two different $\sigma$-algebras, one before the game, $\mathcal{F}_1 = \{\varnothing, \Omega\}$, and one after both players have played, $\mathcal{F}_2 = \mathcal{P}(\Omega)$. This represents that before the game has started, we have no information on the players moves, so if we ask to take an expectation with respect to this state of information, $E[X|\mathcal{F}_1] = E[X]$ is just a constant valued function at $\int_{\Omega} X \; dP$. Why would we make it a constant-valued function rather than just a constant real number? This is because we can understand this idea of <i>blurriness</i>. With no information, everything is so blurry that it just looks like $X$ is a random variable taking a constant value at $E[X]$, the average value. </p>
+
+              <p>Now if we take $E[X|\mathcal{F_2}]$, we just get $X$! This is because with respect to the state of information of $\mathcal{F}_2$, we have enough information about the state of the system to completely resolve what the value of $X$ should be for any value in $\Omega$.</p>
+
+              <p>In other words, when we take expectations with respect to a certain filtration, we <i>"smudge"</i> our function based on the level of information we know to obtain a new function from $\Omega$ to $\R$.</p>
+
+              <p>To answer the question of $E[X|\omega_2 = P]$, we can simply come up with a $\sigma$-algebra $\mathcal{F}'$ representing the state of information where the first player has picked but the second player has not, and find $E[X|\mathcal{F}']$. Then we simply evaluate $E[X|\mathcal{F}']$ at any of $(R,P)$, $(P,P)$, or $(S,P)$, because in $\mathcal{F}'$, any set containing one of those three contains all of those three; it does not resolve functions with any better resolution than that.</p>
+
+              <p>In other words, to relate the two perspectives,
+                $$\boxed{E[X|\mathcal{F}']((R,P)) = E[X|\mathcal{F}']((P,P)) = E[X|\mathcal{F}']((S,P)) = E[X|\omega_2 = P]}$$</p>
+
+              <h3>Which Perspective is Better?</h3>
+
+              <p>The first idea embodies the idea of conditional probability and Bayes rule, and at least for me, that is foundational to probability. On the other hand, the second idea motivates the idea of a filtration: an increasing sequence of $\sigma$-algebras, which feels kind of nice because it embodies this idea that over time, we gain information, which allows us to resolve things more clearly.</p>
+
+              <p>There is actually a nice discussion in Rosenthal's book <i>A First Look at Rigorous Probability Theory</i> which discusses this difference (although I only ended up seeing this discussion <i>after</i> I ended up spend hours figuring it out with no reference that didn't confuse me more 😭). In the end, Rosenthal gives a great and very reasonable example for why the second perspective may be better. </p>
+
+              <p>He mentions that it is difficult to define the conditional probability $P(A | B) = \dfrac{P(A \cap B)}{P(B)}$ when $P(B) = 0$. This is a natural point to make, but it's not obviously a great reason, since why would we need to condition apon events which are <i>guaranteed</i> to not happen? If I condition on events to do computations after I know that a given event has actually occured, then it doesn't really make sense to condition on things that would never occur. </p>
+
+              <p>However, here's Rosenthal's example: consider $(X,Y)$ random variables forming points uniformly distributed on the traingle $T = \{(x,y) \in \R^2 : 0 \le y \le 2, y \le x \le 2\}$. Find $P(Y > \frac{3}{4} | X = 1) = E[1_{Y > \frac{3}{4}} | X = 1]$. In this case, $P(X = 1)$ is zero, so the first perspective breaks down. Does the second perspective hold up to the test?</p>
+
+              <p>If we create a $\sigma$-algebra $\mathcal{F}'$ representing the state of information where we know the value of $X$, but do not know the value of $Y$, we want to find $E[X | \mathcal{F}']((1,1))$. $\mathcal{F}'$ resolves $X$ so that it maps all points with the same value of $X$ to the same real number, essentially "smudging" $X$ over every line $X = r$ for $r \in \R$. Thus, $E[X|\mathcal{F}']((1,1))$ becomes the average value of $X$ on the line $X = 1$, which is $\boxed{\frac{3}{4}}$. So in the end, maybe the perspective from Oksendal and Rosenthal and all the other measure theory books was the better one after all.... I promise to read Rosenthal now.</p>
+
+              <p>Of course, I'm being very hand wavy with this smudging idea. This is mainly so that it appeals to intuition, and for readability. A more thorough mathematical construction of the idea is in the appendix.</p>
+
+              <h2>Filtrations and Martingales 🤩</h2>
+
+              <p>I should probably preface by saying I don't know enough about filtrations and martingales to be writing this section of this sketch, but I'm writing it anyway because... that's the idea behind the "sketches": they're just sketches. I just think filtrations and martingales sound ultracool.</p>
+
+              <p>In the context of stochastic processes, things become more interesting with the notion of a filtration. </p>
+
+              <p>A stochastic process (stochastic is just a fancy word for "random") is simply a collection of random variables indexed by time: $\{X_t\}_{t \in [0, \infty)}$. In other words, at each point in time, we obtain a random real number. They generally all share the same ambient space, so the same $(\Omega, \mathcal{F}, P)$.</p>
+
+              <p>At each point in time, we take the pre-image of our topology on $\R$ with respect to $X_t$ and obtain a $\sigma$-algebra $\mathcal{F}_t$.</p>
+              
+              <p>To understand the idea of a filtration, it's most illustrative to consider a series of coin tosses. Suppose someone is tossing coins repeatedly, in an interesting stochastic demonstration. Our sample space $\Omega$ is simply all infinitely long strings of heads and tails. Before she tosses any coins, we can represent the state of information by the $\sigma$-algebra $\mathcal{F}_0 = \{\varnothing, \Omega\}$. With our filtration, we cannot resolve much, everything still looks blurry. What does that mean? These are the sets for which we can tell whether or not we are in them. For any nonempty subset of $\Omega$, we cannot say for certain whether or not we are in those sets. For $\varnothing$ and $\Omega$, we can say with certainty at this point, that we are in one of these sets.</p>
+
+              <p>Now after she tosses the coin once, we obtain a new $\sigma$-algebra $\mathcal{F}_1 = \{\varnothing, A_H, A_T, \Omega\}$ (I use here the notation of Shreve), where $A_H$ stands for the collection of all infinite sequences of tosses that start with $H$, and similarly $A_T$. This is now the finest set for which we can tell whether or not her current sequence will be in each of these sets or not. </p>
+
+              <p>This is the sense in which we mean "resolution". As our $\sigma$-algebra obtains more elements, we know more information.</p>
+
+              <p>Now what does it mean for a random variable to be measurable starting at time $t$? It means that at this point in time, considering $E[X|\mathcal{F}_t]$ is just $X$; considering $X$ with respect to the $\sigma$-algebras $\mathcal{F}_s$ for $s \ge t$ just gives us $X$ because at this point we have enough resolution to "see" the whole picture of $X$. In other words, at time $t$, we have enough information to specify exactly what the value of $X$ is for her system.</p>
+
+              <p>A martingale is a stochastic process $M_t$ that sort of lines up with a filtration $\mathcal{M}_t$ in the sense that $M_t$ is $\mathcal{M}_t$-measurable, and $M_s$ when smudged by $\mathcal{M}_t$ becomes $M_t$, (AKA $E[M_s \mid \mathcal{M}_t] = M_t$ whenever $s \ge t$). Of course we also require $E[|M_t|] < \infty$ to make sure everything is integrable and all expectations and things make sense. Martingales end up allowing us to model a <i>ton</i> of different things, for example queue lengths, genetic drift, risk management, and pattern matching to name just a few. I hope to read about some of these applications soon.</p>
+
+              <p>Another interesting question, though, is how to model information and order in these random systems. Perhaps there are some deep ideas built into the foundations of our theory that can give us insights into what information is in the real world? I might be spouting pure nonsense, but if there is something interesting there, I'll make another sketch later.</p>
+
+              <h2>What Michael Greinecker and Chris Evans Have to Say</h2>
+
+              <p>To end this sketch, I'll finish off by discussing some ideas from Stack Exchange posts on this question:
+                <ul>
+                <li><a href="https://math.stackexchange.com/questions/668752/what-can-i-do-with-measure-theory-that-i-cant-with-probability-and-statistics">This Post</a></li>
+                <li><a href="https://math.stackexchange.com/questions/393712/why-measure-theory-for-probability">This Other Post</a></li>
+              </ul>
+              </p>
+
+              <p>I'll start with Michael Grinecker's answer.</p>
+
+              <p>He starts by mentioning that there is another problem which has a very simple answer when expressed measure theoretically:</p>
+
+              <p>
+                <b>Problem.</b> Let $X$ and $Y$ be independent random variables, and let $f : \R \rightarrow \R$ be a continuous function. Are $f \circ X$ and $f \circ Y$ independent random variables?</p>
+
+              <p>Of course, my guy doesn't actually say the answers to his questions in his post, leaving us all to suffer and think on our own in a cruel but I guess guru-like fashion.</p>
+
+              <p>Classically, this indeed does seem hard. The definition I have seen is that conditional on any value of $X$, the distribution of $Y$ does not change. In other words, $P(Y \in S | X \in T) = P(Y \in S)$ for all $S$ and $T$. Now, we want to know about transformations of these sets by some continuous functions, and to be honest, it's all a bit weird because there is a certain lack of rigor in what it means to take conditional probabilities here. Originally, it would make sense as $\dfrac{P(Y \in S \text{ and }X \in T)}{P(X \in T)}$, but as we've seen previously in this sketch, this itself is problematic.</p>
+
+              <p>To be honest, the whole notion seems a bit fuzzy and painful because the way we are thinking about it above forces us to condition $P(S)$ on $T$, but $T$ isn't really an event in our event space if our sample space is just considering $Y$. Considering this idea of $P(S | T)$ forces us to look at the <i>joint distribution</i> of the two random variables, and then apply our ideas there. The very idea of wanting to compose with continuous functions begs for measure theory because it makes us think of our random variables as measurable functions.</p>
+
+              <p>The definition of independence is more clear from a measure-theoretic perspective because making random variables be <i>measurable functions</i> allows us to easily compute whether random variables or collections of events for that matter are independent. It does this by formulating the independence of random variables as the independence of collections of events generated by the random variable, which comes from the very fundamental idea of measurability. The definition is: (taken from Oksendal)</p>
+
+              <p><b>Definition (Independence of Collections of Families of Measurable Sets).</b> A collection $\mathcal{A} = \{\mathcal{H}_i : i \in I\}$ of families $\mathcal{H}_i$ of measurable sets is independent if $P(H_{i_1} \cap \dots \cap H_{i_k}) = P(H_{i_1}) \dots P(H_{i_k})$ for all choices of $H_{i_1} \in \mathcal{H}_{i_1},\dots, H_{i_k} \in \mathcal{H}_{i_k}$ with different indices $i_1,\dots, i_k$. </p>
+
+              <p>Then we define random variables to be independent if the $\sigma$-algebras they generate (by taking all preimages of open sets) are independent. Clearly, then, $f \circ X$ and $f \circ Y$ must be independent, because the $\sigma$-algebras they generate are subsets of the $\sigma$-algebras of $X$ and $Y$ respectively. So, yay, we can answer that question much more easily! It looks like the measure theory allows us to define the notion of independence in a way that is much more practical.</p>
+
+              <p>He also mentions notions of convergence, which I would personally say is more on the measure theory side of things than the probability side anyway, although I might be being naive. Continuous time stochastic processes are also a good point, which I discussed above. It is certainly a very pretty result that paths of Brownian motion can be chosen to be almost surely continuous. This does indeed seem to be interesting, and I have a feeling it uses Borel-Cantelli in its proof (although I have to figure it out).</p>
+
+              <p>I will have to read up on all of Kolmogorov's work as well, since he seems to have tons of beautiful results in probability theory. For example, there's Kolmogorov's zero-one law which Greineker mentions in his post, and there is also Kolmogorov's extension theorem and Kolmogorov's continuity theorem, and so many others made by him. I can't say I understand his work yet, but now that I've finally gotten over this misunderstanding, hopefully I'll be able to figure out what his work was all about in the upcoming weeks!</p>
+
+              <p>Now I'll discuss Evans's answer. He again discusses the joint probability ideas. We've seem this point made time and time again. He does mention the idea that maybe distribution theory can resolve the issue as well. I actually happened to take PDEs along with measure theory, so at the time I was very curious about the relationship between distribution spaces and collections of real-valued (not just nonnegative) measures. This topic is something I should surely read about in the future.</p>
+
+              <h2>Appendix: Radon-Nikodym to the Rescue!</h2>
+
+              <p>This should be quite short, but it turns out that we can use the Radon-Nikodym theorem to more rigorously construct our notion of expectation outlined above. To come up with an appropriate definition, it's a good idea to list properties we would like the expectation to have:
+                <ul>
+                <li>$E[X | \mathcal{H}](\omega_1) = E[X | \mathcal{H}](\omega_2)$ whenever $\omega_1$ and $\omega_2$ are not separable in $\mathcal{H}$ (i.e. any set in $\mathcal{H}$ either contains both $\omega_1$ and $\omega_2$ or contains neither).</li>
+                <li>$E[X|\mathcal{H}]$ is $\mathcal{H}$-measurable (so that we get the property that $E[E[X|\mathcal{H}]|\mathcal{H}] = E[X|\mathcal{H}]$, or once we've smudged it to the level of $\mathcal{H}$, it is also refined to the level of $\mathcal{H}$).</li>
+                <li>$E[X|\mathcal{H}]$ is as close to $X$ as possible, while still being $\mathcal{H}$-measurable.</li>
+              </ul></p>
+
+              <p>This last point is the main idea which motivates the definition: Consider $X$ defined on a probability space $(\Omega, \mathcal{F}, P)$. $E[X|\mathcal{H}]$ is a $\mathcal{H}$-measurable function such that 
+                $$\int_H E[X|\mathcal{H}](\omega) \;dP(\omega) = \int_H X(\omega) \;dP(\omega)$$
+                for all $H \in \mathcal{H}$.</p>
+
+                <p>Here, one may see that we have interpretted the notion of closeness in the sense that $E[X|\mathcal{H}]$ and $X$ induce the same measure on $\mathcal{H}$.</p>
+
+                <p>There exists a unique (up to measure zero difference) function satisfying this condition. This is pretty much exactly the statement of the Radon-Nikodym theorem. The random variable $X$ (a $\mathcal{F}$-measurable function) induces a measure on $\mathcal{H}$ by 
+                  $$\mu(H) = \int_H X(\omega) \;dP(\omega).$$
+                  Furthermore, $\mu$ is absolutely continuous with respect to $P$ since whenever $H$ has $P$-measure zero, $\mu(H) = \int_H X(\omega) \;dP(\omega) = 0$. The Radon-Nikodym theorem then guarantees the existence of a unique $\mathcal{H}$-measurable function $f$ such that 
+                  $$\int_H f(\omega) \; dP(\omega) = \mu(H) = \int_H X(\omega) \; dP(\omega)$$
+                  and now we can simply define $E[X|\mathcal{H}] := f$.</p>
+
+                <p>In some sense, the Radon-Nikodym theorem essentially gives us a way to "restrict" our measurable function onto a $\sigma$-algebra on which it is not measurable, thus finding the "closest" or "smudgey" version of the random variable. I find it most appealing to think of it as a restriction since we are essentially restricting the measure induced by $X$ on $\mathcal{F}$ to $\mathcal{H}$. This makes all the results about conditional expectations extremely intuitive. Probably the most intruiging one to me is the Jensen's inequality, because it gives a sense of a more geometric interpretation.</p>
+
+                <h2>Reading List</h2>
+
+                <p>As with every post, this has given me a long reading list to check out:
+                  <ol>
+                  <li>Rosenthal's book.</li>
+                  <li>All of Kolmogorov's Theorems (I say all, but I'm low key a little afraid to see how many "all" is considering how much cool stuff Kolmogorov did).</li>
+                  <li>Can we resolve any issues discussed above with distribution theory, and are the ideas equivalent to what we study in measure theory? Although, there are differences where we can have weird distributions, or something... I'll have to refresh on the ideas.</li>
+                  <li>How do filtrations and martingales relate to the theory of information and thermodynamics?</li>
+                  <li>Strook and Varadhan's book, and dang Strook has a lot of interesting work I'll have to check out in general.</li>
+                </ol>
+                  It seems to turn out that there actually <i>is</i> a lot of extremely sophisticated and juicy mathematics packed into our tiny world.</p>
+
+                  <h2>References</h2>
+
+                  <ol><li>Bass, Richard F. <i>Real Analysis for Graduate Students Version 4.3</i></li>
+                    <li>Øksendal, B. K. <i>Stochastic Differential Equations: An Introduction with Applications.</i> Springer, 2013.</li>
+                    <li>Rosenthal, Jeffrey S. <i>A First Look at Rigorous Probability Theory.</i> World Scientific, 2011.</li>
+                    <li>Shannon, Claude Elwood, et al. <i>The Mathematical Theory Of Communication.</i> University of Illinois Press, 1949.</li>
+                    <li>Shreve, Steven E. <i>Stochastic Calculus for Finance II: Continuous-Time Models.</i> Springer New York, 2004.</li>
+                    <li>"Why Measure Theory for Probability?" Mathematics Stack Exchange, 1 Dec. 1958, <a href="math.stackexchange.com/questions/393712/why-measure-theory-for-probability">math.stackexchange.com/questions/393712/why-measure-theory-for-probability</a>.</li>
+                    <li>"What Can I Do with Measure Theory That I Can't with Probability and Statistics." Mathematics Stack Exchange, 1 Sept. 1959, <a href="math.stackexchange.com/questions/668752/what-can-i-do-with-measure-theory-that-i-cant-with-probability-and-statistics">math.stackexchange.com/questions/668752/what-can-i-do-with-measure-theory-that-i-cant-with-probability-and-statistics</a>.</li>
+                  </ol>
+
+        </main>
+
+    </body> 
+</html>

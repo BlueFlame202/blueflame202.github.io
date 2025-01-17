@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Thai Tea</title>
+    <meta charset="UTF-8">
+    <!--<script id="mathjax" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-mml-chtml.min.js"></script>-->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"></link>
+    <link rel="icon" type="image/png" sizes="32x32" href="../../img/favicon-32x32.png"></link>
+    <link rel="icon" type="image/png" sizes="16x16" href="../../img/favicon-16x16.png"></link>
+    <link rel="manifest" href="/site.webmanifest" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="../../orange-juice.css">
+
+    <script type="text/javascript">
+      window.MathJax = {
+        tex: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+          macros: {
+            "\Z": "\\mathbb{Z}",
+            "\Hom": "\\mathrm{Hom}",
+            "\Aut": "\\mathrm{Aut}",
+            "\null": "\\mathrm{null}",
+            "\R": "\\mathbb{R}",
+            "\N": "\\mathbb{N}",
+            "\Q": "\\mathbb{Q}",
+            "\Primes": "\\mathbb{P}",
+            "\C": "\\mathbb{C}",
+            "\F": "\\mathbb{F}",
+            "\D": "\\mathbb{D}",
+            "\Hart": "\\mathbb{H}",
+            "\Cat": "\\mathsf{Cat}",
+            "\CAT": "\\mathsf{CAT}",
+            "\CatC": "\\mathsf{CatC}",
+            "\CatD": "\\mathsf{CatD}",
+            "\CatE": "\\mathsf{CatE}",
+            "\CSet": "\\mathsf{Set}",
+            "\CGrp": "\\mathsf{Grp}",
+            "\CRing": "\\mathsf{Ring}",
+            "\CCRing": "\\mathsf{CRing}",
+            "\CMod": "\\mathsf{Mod}",
+            "\lendshow": "\\square",
+            "\tendshow": "\\blacksquare"
+          }
+        },
+        options: {
+          renderActions: {
+            addMenu: [],
+            checkLoading: []
+          },
+          ignoreHtmlClass: 'tex2jax_ignore',
+          processHtmlClass: 'tex2jax_process'
+        },
+        loader: {load: ['[tex]/ams']},
+        startup: {
+          ready: () => {
+            window.MathJax.startup.defaultReady();
+          }
+        }
+      };
+    </script>
+  </head>
+    <body>
+        <a href="../"><i>Back to Thai Tea</i></a>
+        <h1 className="title">Channel 20</h1>
+            <p><b>Internet Architecture</b></p>
+            <hr/>
+            <p><b>October 14th, 2024</b> <span style="font-variant: small-caps; font-size: small;" class="fancy-text">(New!)</span></p></p>
+            <p>Still going at it.
+            <ul>
+              <li><b>Chapter 2 Review: Router Hardware</b></li>
+              <ol>
+                <li><b>Colocation Facilities/Carrier Hotels:</b> Buildings where ISPs install routers to connect with each other.</li>
+                <li><b>Line Rate:</b> Speed or bandwidth of a physical port.</li>
+                <li>Size of router: physical size, or maybe number of physical ports, or maybe total bandwidth.</li>
+                <li><b>Line Card:</b> A bunch of physical ports together.</li>
+                <li><b>Chassis:</b> Physical shelf that makes up the router.</li>
+                <li>Three Planes of the Hardware and Software Components of a Router:</li>
+                <ol>
+                  <li><b>Data Plane:</b> Forwards da packets. Used when we need to forward da packets.</li>
+                  <li><b>Control Plane:</b> Communicates with other routers and runs routing protocols. Used when the forwarding table has to be updated bc of a topology change.</li>
+                  <li><b>Management Plane:</b> Tell routers what to do and monitor them.</li>
+                  <li>Data Plane is optimized for more simple tasks like looking up in the table and forwarding.</li>
+                  <li>Control Plane is optimzied for more complex tasks like recomputing paths in the network.</li>
+                  <li>Data and Control planes operate on scales of nanoseconds while Management plane operators on orders of hundreds of seconds.</li>
+                  <li><b>Network Management System (NMS):</b> Software which is exactly what it sounds like. Computes network configuration and applies to router. Allows <b>telemetry</b> to be read from routers.</li>
+                </ol>
+                <li>Images from textbook:</li>
+                <center>
+                  <img src="https://textbook.cs168.io/assets/routing/2-118-router1.png" width="400px" />
+                </center>
+                <center>
+                  <img src="https://textbook.cs168.io/assets/routing/2-119-router2.png" width="400px" />
+                </center>
+                <center>
+                  <img src="https://textbook.cs168.io/assets/routing/2-122-router5.png" width="400px" />
+                </center>
+                <li><b>User packet:</b> data from an end host, forwarded as follows:</li>
+                <center>
+                  <img src="https://textbook.cs168.io/assets/routing/2-123-user-traffic.png" width="400px" />
+                </center>
+                <li><b>Control-plane traffic:</b> info for the router itself, forwarded as follows:</li>
+                <center>
+                  <img src="https://textbook.cs168.io/assets/routing/2-124-punt-traffic.png" width="400px" />
+                </center>
+                <li><b>Punt traffic:</b> User packets that need a bit more special processing, like user packets with a TTL of 1.</li>
+                <li>We need specialized router hardware because the speeds needed for scaling aren't achievable with just a regular computer and software. Simple operations are able to be done in hardware on forwarding chips, others need to be punted to controller cards.</li>
+                <li><b>PHY</b> part of linecard: handles Layer 1 functionality, decoding signal into bits.</li>
+                <li><b>MAC</b> part of linecard: handles link layer (Layer 2) functionality.</li>
+                <li>We can use a trie to handle efficient forwarding table lookup.</li>
+              </ol>
+              <li><b>Chapter 2 Review: Inter-Domain Routing</b></li>
+              <ol>
+                <li><b>Autonomous Systems (ASes):</b> One or more local networks all run by the same operator.</li>
+                <li><b>Inter-domain Topology/AS Graph:</b> Graph without all the local details.</li>
+                <li><b>Stub AS:</b> Solely exists to give internet to hosts in its local networks.</li>
+                <li><b>Transit AS:</b> Forwards transit on behalf of other ASes.</li>
+                <li>Roles for AS: <b>customer</b>, <b>provider</b>, <b>peer</b>.</li>
+                <li>Stub ASes are customers. Transit ASes are providers.</li>
+                <li><b>Tier 1 ASes:</b> No incoming edges in the AS graph, all having peer connections between each other. They have to be peering with each other, which is why the internet is connected.</li>
+                <li><b>Gao-Rexford Rules:</b>
+                <ol>
+                  <li>When there are multiple options, AS prefers to send to most profitable next hop, or to next hop which is a peer.</li>
+                  <li>ASes only carry traffic if they're getting paid for it.</li>
+                </ol></li>
+                <li>Routes are valley-free.</li>
+                <li>ASes want autonomy and privacy.</li>
+              </ol>
+            </ul></p>
+            <hr />
+            <p><b>October 13th, 2024</b> <span style="font-variant: small-caps; font-size: small;" class="fancy-text">(New!)</span></p></p>
+            <p>Still preparing for my midterm, but the clock has decided to change the day on me.
+            <ul>
+              <li><b>Chapter 2 Review: Addressing</b></li>
+              <ol>
+                <li><b>IP Adresses</b> are unique addresses that identify a host. They aren't static, and can change when you change locations.</li>
+                <li>Hierarchical Addressing: Label nodes with a number in the front representing which LAN it is from, so that in the address table, for other LANs, we just keep one entry for each LAN which is not the LAN we are in. Side benefit: makes tables more stable.</li>
+                <li>Hosts have a network ID and a host ID, so that network IDs matter more to inter-domain protocols and host IDs matter more to intra-domain protocols.</li>
+                <li>Instead of just keeping just one entry for each LAN, we can even have one entry for ranges of LANs! Or, we can have a <b>default entry</b> that says something like: "for all other entries which are not above, forward to R3".</li>
+                <li>Early Addressing Approach: 8 bit network ID and 24 bit host ID, but this isn't efficient because different LANs and overall networks need different numbers of bits for networks and hosts.</li>
+                <li><b>Classful Addressing:</b> different network sizes based on needs, split into Class A, Class B, and Class C. By 1994 though we were running out of Class B networks. This method is now obsolete.</li>
+                <li><b>Classless Inter-Domain Routing (CIDR):</b> Allocate a certain number of network/host bits depending on how many hosts the entity needs.</li>
+                <li>ICANN --> RIRs --> Large Organizations and ISPs (Local Internet Registeries) --> Hosts or Small Organizations</li>
+                <li><b>Dotted Quad Representation:</b> Breaking our 32 bit IP addresses into 4 groups of 8 bits.</li>
+                <li><b>Slash Notation:</b> Use slashes to denote a range of addresses. Write fixed prefix, zeros for unfixed bits, and write number of fixed bits after slash. For example, 192.0.0.0/8 would mean the 192 part is fixed and the other parts are not. Default route is written 0.0.0.0/0, and fixed routes might be like 10.41.157.75/32 (the IP I'm writing this from).</li>
+                <li><b>Netmask:</b> A bitmask for which bits of the IP are fixed.</li>
+                <li>If an address is in two ranges, use <b>longest prefix matching</b>, which means we use the most specific range that matches our address.</li>
+                <li><b>IPv6:</b> Written in hex rather than decimal of the form of 8 hex strings each 4 characters long, separated by colons, and we can omit long strings of zeros. We can also still use slash notation and such.</li>
+              </ol>
+            </ul></p>
+            <hr/>
+            <p><b>October 12th, 2024</b> <span style="font-variant: small-caps; font-size: small;" class="fancy-text">(New!)</span></p></p>
+            <p>Right now, I'm preparing for the midterm from the CS 168 textbook. (<a href="https://textbook.cs168.io/">Teleport!</a>). Here are some of my notes:
+            <ul>
+              <li><b>Chapter 1 Review: Network Architecture</b></li>
+              <ol>
+                <li><b>Narrow Waist:</b> In high layers, we want to have a variety of protocols that can deal with different applications and problems, like websites or system clocks, and in low layers, we want to have a variety of protocols to deal with different hardware, but in the middle we should have a very small number of protocols so everyone in higher layers can implement the same thing. For internet, this is middle piece is Layer 3, where there is just one <i>internet protocol</i>, IP.</li>
+                <li><b>Demultiplexing:</b> To demultiplex, we wrap our protocols layer by layer, and each layer tells us what the next inner-most layer's protocol will be.</li>
+                <li>Remark: physical ports (holes you plug cables into) are different than logical ports (the numbers in Layer 4 protocols) and they don't correspond.</li>
+                <li><b>Socket:</b> A way an OS can connect an application to the <i>network stack</i> in the OS.</li>
+                <li>If we implemented reliability into the network and something went wrong, hosts couldn't do anything about it. Instead, the internet uses <b>end-to-end</b> implementations for reliability to force hosts to take responsibility for reliability. Hosts now have power over ensuring reliability. With great power comes great responsibility.</li>
+              </ol>
+              <li><b>Chapter 1 Review: Resource Sharing</b></li>
+              <ol>
+                <li><b>Statistical Multiplexing:</b> Dynamically allocating resources based on need rather than giving fixed resources to everyone at all times.</li>
+                <li><b>Best Effort:</b> Have users send data to the network with no guarantees of having enough bandwidth to meet demand.</li>
+                <ul>
+                  <li>Designed with <b>packet switching</b>: Switches don't think about flows or reservations and just send packets independently of each other to next node.</li>
+                  <li>Implemented with no coordination between packets or switches.</li>
+                </ul>
+                <li><b>Reservations:</b> Users explicitely request and reserve bandwidth they need.</li>
+                <ul>
+                  <li>Designed with <b>circuit switching</b>: End host finds path of switches to destination end host, and then makes a special reservation through the network through these switches.</li>
+                </ul>
+                <li>Evaluating Design Tradeoffs:</li>
+                <ul>
+                  <li>Is this a good abstraction (or API) for the network to offer to an application developer?</li>
+                  <ul>
+                    <li>Circuit switching is better here, because it offers more a more reliable abstraction to the user, and also makes it easier for operators because they can just look at how much bandwidth each user is requesting and charge them that much money, whereas if you don't know if you'll actually be able to allocate that bandwidth, you can't be sure how much to charge.</li>
+                  </ul>
+                  <li>Is the approach efficient at scale? Does the approach use all the available bandwidth on the network, or is some bandwidth wasted?</li>
+                  <ul>
+                    <li>Packet switching is more efficient here, because data might not be sent at a constant rate, so users might not be using all of their bandwidth at all times. Circuit switching also has the added time of finding and setting up a circuit.</li>
+                  </ul>
+                  <li>How well does each approach handle failure at scale?</li>
+                  <ul>
+                    <li>If something fails, router just chooses a new path in packet switching. In circuit switching, router gives that responsibility to the user, so it just has to cancel everything if a fail happens.</li>
+                  </ul>
+                  <li>How complex is it to implement each approach at scale?</li>
+                  <ul>
+                    <li>Lot's of problems along the way, like checking the success of a reservation, how to know if a reservation was accidentally dropped, the confirmation is dropped, whether or not to try again if a reservation is declined, etc..</li>
+                  </ul>
+                  <li>In summary, in many cases involving individual and human users, we prefer packet switching. Sometimes, larger corporations might prefer circuit switching, however, if they expect more smooth bandwidth demands, want to guarantee reliability, and other things.</li>
+                  <li>Nowadays, users and developers have also adapted to the cons of packet switching! Technology influences user behavior.</li>
+                </ul>
+              </ol>
+              <li><b>Chapter 1 Review: Links</b></li>
+              <ol>
+                <li><b>Bandwidth:</b> How many bits can be sent per unit of time (speed, width of pipe). Measured in bits per second.</li>
+                <li><b>Propagation Delay:</b> How long it takes bit to travel along link (length of link/pipe). Measured in time (seconds). In the context of links, same as <b>latency</b>.</li>
+                <li><b>Bandwidth-Delay Product (BDP):</b> $\text{Bandwidth} \times \text{Propagation}$, capacity.</li>
+                <li>Here is a very nice graphic to show how <b>propagation delay</b> is computed from the textbook:
+                  <center><img src="res/168-textbook-link-delay.png" style="width: 400px;" /></center>
+                </li>
+                <li><b>Transient Overload:</b> In the long run, we will have enough capacity to send outgoing packets, but in the moment, we are overloaded. <i>Solution: Maintain a queue of packets. At each time, choose to send an incoming packet or one from the queue. Choice determined by <b>packet scheduling algorithm</b>.</i></li>
+                <li><b>Persistant Overload:</b> Exactly what it sounds like. Queue fills up so quickly we're forced to drop packets. If an operator notices persistant overload, they need to manually upgrade the link, or tell senders to slow down.</li>
+              </ol>
+              <li><b>Chapter 2 Review: Link-State Protocols</b></li>
+              <ol>
+                <li>Link-state protocols give nodes global information and ask them to individually compute the solution.</li>
+                <li>From the textbook: "Link-state protocols in one sentence: Every router learns the full network graph, and then runs shortest-paths on the graph to populate the forwarding table."</li>
+                <li>Choices for shortest-path algorithm: Bellman-Ford, Dijkstra, or maybe alternate options, for example things that might run well in parallel.</li>
+                <li>Potential Issues and Resolutions:</li>
+                <ol>
+                  <li><i>ISSUE:</i> If Router A computes the shortest route to be through Router B and Router B computes the shortest route to be through Router A, we'll get a routing loop!<br/>
+                  <i>FIX:</i> Ensure Router's produce compatible results. We'll require:
+                  <ol>
+                    <li>all routers to agree on the network topology,</li>
+                    <li>all routers find least-cost paths,</li>
+                    <li>all costs are positive,</li>
+                    <li>all routers to use the same tie-breaking rules.</li>
+                  </ol>
+                  </li>
+                </ol>
+                <li>Learning Graph Topology: We do this via <b>flooding</b>, where we 
+                  <ol>
+                    <li>first, learn your own neighbors,</li>
+                    <li>then, tell everyone else (flood) who your neighbors are,</li>
+                    <li>and if anything changes, flood that as well.</li>
+                  </ol>
+                </li>
+                <li>Potential Issues and Resolutions:</li>
+                <ol>
+                  <li><i>ISSUE:</i> If Router A broadcasts to B that two routers are neighbors, and then B broadcsts that back to A, and so on, we get <b>infinite flooding</b>. This also happens if we have a network loop.<br/>
+                  <i>FIX:</i> Ensure we don't send the same information twice. Write down the information the first time and the second time don't send it again. can also introduce a timestamp to make the message more unique and identifiable.
+                  </li>
+                </ol>
+                <li>Link state does converge, and routing state then remains same until network topology change.</li>
+                <li>Lot's of details and complexity in those details with link-state protocol. Basically in my opinion it's a pain.</li>
+                <li>Comparison between Distance-Vector and Link-State:</li>
+                <ol>
+                  <li>Distance-Vector puts more trust on the nearby nodes to get the right path right, whereas in Link-State we have the information.</li>
+                  <li>Distance-Vector could be slower to converge based on implementation.</li>
+                  <li>Link-State protocols better for small-scale systems but don't scale well to global internet. Some operators might not want to reveal their network topology so that makes link-state harder.</li>
+                </ol>
+                <li>Networks usually use a combination of both Distance-Vector and Link-State protocols.</li>
+              </ol>
+            </ul></p>
+            <hr />
+            <p><b>October 2, 2024</b>
+            <p>
+              Today I'm studying and trying to implement a distance-vector protocol. Here are some notes from the CS 168 textbook (<a href="https://textbook.cs168.io/routing/distance-vector.html">Teleport!</a>).
+              <ol>
+                <li><b>Distance-vector protocol</b> is one of three, others being <b>link-state</b> and <b>path-vector protocols</b>.</li>
+                <li>Steps in the protocol:</li>
+                <ul>
+                  <li>Hosts should introduce themselves to their adjacent routers.</li>
+                  <li>Every time a router learns of a host $A$,</li>
+                  <ol>
+                    <li>The router adds the information about $A$ to its forwarding table.</li>
+                    <li>The router sends information about $A$ to all adjacent routers.</li>
+                  </ol>
+                </ul>
+                <li>In this protocol, <b>routing announcements</b> (basically a router saying that it can reach a host) propagate outwards away from the host and <b>forwarding</b> propagates inwards towards the host.</li>
+                <li>Potential Issues and Resolutions:</li>
+                <ol>
+                  <li><i>ISSUE:</i> Multiple paths from a router to a host, so a router recives information about $A$ multiple times.<br/>
+                  <i>FIX:</i> <b>Bellman-Ford Updates:</b> Update based on minimal cost! If at any point we recieve information about $A$ having a smaller cost from this router, update your forwarding table!</li>
+                  <li>
+                    <i>ISSUE:</i> Network topology can change, so if a cost gets increased, we may be cooked.<br/>
+                    <i>FIX:</i> <b>Next-Hop Rule:</b> We accept worse costs if they come from the same router that is already in our forwarding table. This may produce inefficiencies if a path suddenly gets much worse since we will have forgotten about the next best path which might now be better. However, the steady state will be optimal, so running the protocol again will end up working.
+                  </li>
+                  <li>
+                    <i>ISSUE:</i> Packets might get dropped.<br/>
+                    <i>FIX:</i> <b>Resending:</b> One idea is to have people send reciepts, but an alternate approach is to simply resend the packet every once in a while. This will actually help with expiring below.
+                  </li>
+                  <li>
+                    <i>ISSUE:</i> Network topology can change, so if router fails, we're definitely cooked, sautéd, and stir-fried.<br/>
+                    <i>FIX:</i> <b>Expiring:</b> Entries in the forwarding table expire (and get deleted) when their <b>time to live (TTL)</b> becomes zero. We re-energize a forwarding table by increasing it's life whenever we hear from it.
+                  </li>
+                  <li>
+                    <i>ISSUE:</i> Network topology can change, so a particular link might fail. Then it takes a long time (until TTL goes to zero) for that to get detected and fixed, and in the meantime, things will all fail. Are we cooked?<br/>
+                    <i>FIX:</i> <b>Poison:</b> If a router detects a failed path, we propagate an advertisement saying that the new distance is infinity to represent the bustedness of the path.
+                  </li>
+                  <li>
+                    <i>ISSUE:</i> If routers advertise to all neighboring routers, and a router goes down, after the entry in the earlier router's forwarding table expires, it will accept the regular ping from "resending" from a later router's advertisement and add a new link in it's forwarding table to the later router, causing a length-2 loop.<br/>
+                    <i>FIX 1:</i> <b>Split-Horizon:</b> Never send an advertisement for a path back to the router that sent the original advertisement to you.<br/>
+                    <i>FIX 2:</i> <b>Poison Reverse:</b> Always advertise poison instead of the actual route to the router that sent an original advertisement to you (from the CS 168 textbook, basically we are saying: "do not forward packets my way because I’d just forward them back to you.")
+                  </li>
+                  <li>
+                    <i>ISSUE:</i> <b>Count To Infinity:</b> If a poison advertisement gets dropped, then before it gets resent, we can actually form larger loops. This time we really are cooked tbh.<br/>
+                    <i>FIX:</i> Impose a maximum cost for a route, beyond which all costs will be infinity, so that whenever we have a count to infinity problem where costs "count to infinity", they will bump into the maximum cost and get eradicated from the table.
+                  </li>
+                </ol>
+              </ol>
+            </p>
+            <hr/>
+            <p><b>September 30th, 2024</b></p>
+            <p>Right now, I'm studying routing from the CS 168 textbook (<a href="https://textbook.cs168.io/routing/">Teleport!</a>). There are a few interesting ideas:
+            <ol>
+                <li>Within the internet, we can have "local networks", each of which can choose its own routing protocol called an <b>inter-domain routing protocol</b> or <b>interior gateway protocol (IGP)</b>.</li>
+                <li>We can have an <b>inter-domain routing protocol</b> or <b>exterior gateway protocol (EGP)</b> for routing between different local networks.</li>
+                <li>One approach to routing is <b>destination based forwarding/routing</b>, where the path packets take is determined precisely by their destination (via <i>forwarding tables</i>).</li>
+                <li><i>Routing</i> is about populating forwarding tables whereas <i>forwarding</i> is actually about sending packets to the right places.</li>
+                <li><i>Routing state validity is equivalent to having no loops or dead ends.</i></li>
+                <li>Beyond validity, we can use <b>least-cost routing</b> to determine the best routing state.</li>
+                <li>Operators can manually set "base-case" or "trivial" routes via <b>static routing</b>.</li>
+            </ol></p>
+            <hr/>
+            
+            
+    </body> 
+</html>
