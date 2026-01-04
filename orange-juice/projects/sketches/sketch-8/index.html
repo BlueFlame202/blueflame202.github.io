@@ -64,44 +64,192 @@
     <body>
     
         <main>
-            <p><i>Did you get here from lemonade? If you're lost, <a href="https://aathreyakadambi.vercel.app/blog">click here</a> to go back...</i></p>
+            <!-- <p><i>Did you get here from lemonade? If you're lost, <a href="https://aathreyakadambi.vercel.app/blog">click here</a> to go back...</i></p> -->
             <a href="../"><i>See all sketches...</i></a>
             <h1 className="title">Sketch 8</h1>
             <p><b>A Review of Introductory PDE Theory</b></p>
             <hr/>
             <h2>Huh...</h2>
-            <p>I was motivated to make this note because I feel like I didn't learn PDEs as thoroughly as I wanted to the semester I took it. Also, I want my study of PDEs in this sketch to contain many many more pictures than a book like Evans, which I felt could have used many more pictures (although I guess it did have a few). Finally, I want this summary to supplement the material covered in many PDEs courses by giving examples of the application of the theory of PDEs to study things in
+            <p>I was motivated to make this note because I feel like there is much more to PDEs than what I mastered in the semester I took the intro course. Also, I want my study of PDEs in this sketch to contain many many more highly-cool pictures than a book like Evans, which I felt could have used many more pictures (although actually in hindsight it did have quite a few). Finally, I want this summary to supplement the material covered in many PDEs courses by giving examples of the application of the theory of PDEs to study things in
             <ul>
                 <li>Quantum Mechanics</li>
                 <li>Differential and Complex Geometry</li>
                 <li>Fluid Mechanics</li>
+                <li>Numerics</li>
             </ul>
-            (I might slip in some applications of ODEs as well, but don't hate me for it). Finally, I want to talk about a philosophical remark I vaguely remember my physics teacher making in freshman year:
+            (I might slip in some applications of ODEs as well, but don't hate me for it). Finally, I want to talk about a philosophical remark I vaguely remember my physics teacher making in my first semester:
             <blockquote>
                 <i>Most physical phenomena can be modeled very nearly by a second-order differential equation. </i>
                 <p style="text-align: right">- May or may not have been said by Prof. Benjamin Safdi</p>
             </blockquote>
-            I honestly might be remembering it a bit (or completely) wrong, but we can maybe try in this sketch to see if we can reconstruct his message from my painfully bad memory. 😃😜 I'll even see if I have a picture from the class he said it! I really enjoyed his lab class! 
+            I honestly might be remembering it a bit (or completely) wrong, but we can maybe try in this sketch to see if we can reconstruct his message from my painfully bad memory. 😃😜
             </p>
 
             <p>
                 <b>Date Started:</b> June 25, 2024<br />
-                <b>Date Finished:</b> <i>June 25, 2024</i>
+                <b>Date Finished:</b> <i>June 14, 2025 (Projected, took a while, oops)</i>
+                <b>Date Released to Public:</b> <i>Unpublished</i>
             </p>
 
-            <h2>Some History and A List of Problems</h2>
+            <h2>Table of Contents</h2>
+            <ol>
+                <li><a href="#examples-and-classification-of-pdes">Examples and Classification of PDEs</a></li>
+                <li><a href="#method-of-characteristics">Method of Characteristics</a></li>
+                <li><a href="#distributions-and-fourier-analysis">Distributions and Fourier Analysis</a></li>
+                <li><a href="#functional-analysis-and-quantum-mechanics">Functional Analysis and Quantum Mechanics</a></li>
+                <li><a href="#optimization-and-differential-geometry">Optimization $\cap$ Differential Geometry</a></li>
+                <li><a href="#hodge-decomposition">Hodge Decomposition</a></li>
+                <li><a href="#fluid-dynamics">Fluid Dynamics</a></li>
+                <li><a href="#finite-differences-finite-elements-and-galerkin-methods">Finite Differences, Finite Elements, and Galerkin Methods</a></li>
+                <li><a href="#wavelet-based-numerical-methods">Wavelet-Based Numerical Methods</a></li>
+                <li><a href="#all-of-physics-is-just-expanding-to-second-order">All of Physics is Just Expanding to Second Order</a></li>
+                <li><a href="#discretizations-that-show-up-in-time-series-modeling">Discretizations That Show Up in Time Series Modeling</a></li>
+                <li><a href="#references">References</a></li>
+            </ol>
 
+            <!-- might want to add a section on the history of PDEs, or a link to a survey I make -->
 
-            <h2>Distributions and Fourier Analysis</h2>
+            <h2 id="examples-and-classification-of-pdes">Examples and Classification of PDEs</h2>
             <p>
-              As Strichartz put it in his amazing book, sometimes it doesn't make so much sense to worry about individual points $x$. Read the first few pages of his book for a more thorough explanation, but the idea is that we can better understand these functions by "testing" them with test functions. 
+              <a href="https://math.berkeley.edu/~evans/evans_pcam.pdf">This survey</a> by Lawrence C. Evans was particularly helpful for me in understanding how mathematicians classify PDEs. There are only a few main methods of classification:
+            </p>
+            <ul>
+              <li>Order</li>
+              <ul>
+                <li>The <i>order</i> of a PDE is the highest derivative that appears in the equation.</li>
+              </ul>
+              <li>Type (Elliptic, Parabolic, Hyperbolic)</li>
+              <ul>
+                <li>This classification system is particularly for second-order PDEs, in parallel to the classification of conic sections into ellipses, parabolas, and hyperbolas. Just as for conic sections, the classification of PDEs is based on the <i>discriminant</i> of the equation.</li>
+                <li>The above point is only mostly true, since those who study PDEs tend to use the terms much more losely, on the basis of how the solutions behave, rather than thinking about the discriminant.</li>
+                <li>The Cahn-Hilliard equation, for example, is considered parabolic, despite not really being a second-order PDE (something that confused me for a while).</li>
+              </ul>
+              <li>Linearity</li>
+              <ul>
+                <li>A PDE is linear if it is linear in the unknown function and its derivatives. Formally, if it can be written as $L(u) = f$ where $L$ is a linear differential operator, then the PDE is linear.</li>
+                <li>Similar classifications exist for quasilinear, semilinear, and nonlinear PDEs, although these terms can get a bit confusing until used frequently in practice.</li>
+                <li>Linearity does matter in terms of what kinds of behaviors to expect and what techniques can be applied to the PDE.</li>
+              </ul>
+            </ul>
+
+            Some examples of PDEs include the transport equation, the heat equation, the wave equation, the Laplace equation, the Poisson equation, the Schrödinger equation, the Navier-Stokes equations, the Euler equations, Maxwell's equations, the biharmonic equation, and the Hamilton-Jacobi equations. A good reference for a list of important PDEs is in the first chapter of Evan's book, as well as the survey linked above.
+
+            <h2 id="method-of-characteristics">Method of Characteristics</h2>
+            <p>
+              The method of characteristics is actually a pretty simple idea. Consider an equation like this:
+              <center>$$u_t + b \cdot Du = 0, \qquad t \in \R, x \in \R^n$$</center>
+              <center>$$u(0,x) = u_0(x), \qquad x \in \R^n$$</center>
+              where $D$ is the vector of spatial derivatives and $b$ is a constant vector in $\R^n$. Then we can squint our eyes and say:
+              <center>$$\begin{bmatrix} 1 & b^\top \end{bmatrix} \begin{bmatrix} u_t \\ Du\end{bmatrix} = 0$$</center>
+              so that our solution $u(t, x)$ is constant along the lines perpendicular to $\begin{bmatrix} 1 \\ b \end{bmatrix}$. In other words, $u(t + s, x + sb) = u(t, x)$ for any $s \in \R$, so if we are given initial data anywhere, we can simply propagate it along these lines via knowledge of our solutions' contours. Here, $u(0, x) = u_0(x)$, so $u(s, x + sb) = u_0(x)$ for any $s \in \R$ and $x \in \R^n$. This gives the solution (after reparametrization):
+              <center>$$u(t, x) = u_0(x - tb).$$</center>
             </p>
 
-            <h2>Bonus Section: Discretizations that Show Up in Time Series Modeling</h2>
+            <p>
+              These lines perpendicular to $\begin{bmatrix} 1 \\ b \end{bmatrix}$ are known as <b>characteristics</b>. We have already seen how they can solve the homogeneous transport equation with constant coefficients. But they are far more powerful.
+            </p>
 
+            <p>
+              Firstly, characteristics will still work even if we remove the need for homogeneity. Suppose we instead had 
+              <center>$$u_t + b \cdot Du = f, \qquad t \in \R, x \in \R^n$$</center>
+              <center>$$u(0,x) = u_0(x), \qquad x \in \R^n$$</center>
+              so that after squinting, 
+              <center>$$\begin{bmatrix} 1 & b^\top \end{bmatrix} \begin{bmatrix} u_t \\ Du\end{bmatrix} = f.$$</center>
+              We can actually just take the same characteristics, and now instead of contours, we have ODEs along our characteristics. Define $z(s) = u(t+s, x+ sb)$. Then 
+              $$\dot{z}(s) = f$$
+              is now an ODE.
+            </p>
 
-                  <h2>References</h2>
+            <div class="strat">
+              <b>Strat (Method of Characteristics).</b> First order PDEs can be solved by solving systems of ODEs along characteristics.
+            </div>
 
+            <p>
+              Woah woah woah. That strat is jumping ahead a little bit. Can we really solve arbitrary (even nonlinear) first order PDEs with the method of characteristics we've been developing above?
+            </p>
+
+            <h2 id="distributions-and-fourier-analysis">Distributions and Fourier Analysis</h2>
+            <p>
+              As Strichartz put it in his amazing book, sometimes it doesn't make so much sense to worry about individual points $x$. Read the first few pages of his book for a more thorough explanation, but the idea is that we can better understand these functions by "testing" them with test functions. Questions like these lead to the notion of distributions.
+            </p>
+
+            <p>
+              The applicability of Fourier analysis to PDEs comes down to the idea that differentiation is a linear operator which corresponds to a convolution with a particular distribution!
+            </p>
+
+            <div class="strat">
+              <b>Strat (Translation Equivariance of Derivatives).</b> Constant coefficient differential operators are convolutions.
+            </div>
+
+            <p>
+              One constructive line of reasoning is that the derivative corresponds to convolution with the derivative of the Dirac Delta distribution, which can be seen via integration by parts. A more algebraic line of reasoning is that operators which commute with translations are convolutions, and differentiation indeed commutes with translations (by chain rule).
+            </p>
+
+            <p>
+              One major property of Fourier analysis is that it makes convolutions easy by converting them into products. This is a very powerful property, and it is exactly what makes it so useful when we have differential equations involving constant coefficient differential operators.
+            </p>
+
+            <h2 id="functional-analysis-and-quantum-mechanics">Functional Analysis and Quantum Mechanics</h2>
+
+            <h2 id="optimization-and-differential-geometry">Optimization $\cap$ Differential Geometry</h2>
+
+            <p>
+              The study of differential equations is intimately connected to geometry through the idea of variational calculus. In fact, I claim that there is a deep sort of correspondence between variational problems and differential equations.
+            </p>
+
+            <p>
+              To see this, we can start with the Laplace equation.
+            </p>
+
+            <h2 id="hodge-decomposition">Hodge Decomposition</h2>
+
+            <h2 id="fluid-dynamics">Fluid Dynamics</h2>
+
+            <h2 id="finite-differences-finite-elements-and-galerkin-methods">Finite Differences, Finite Elements, and Galerkin Methods</h2>
+
+            <p>
+              The translation of the study of differential equations into the discrete setting is not very difficult, and mainly consists of replacing the differential operator with a difference operator. However, there are many different ways to do this, and each has its own advantages and disadvantages, leading to different numerical schemes for the same differential equation.
+            </p>
+
+            <p>
+              Choosing a mesh size $h$, there are two main ways to replace the differential operator: a forward difference or a backward difference.
+              $$D^+_x f(x) = \frac{1}{h}(f(x+h) - f(x))$$
+              $$D^-_x f(x) = \frac{1}{h}(f(x) - f(x-h))$$
+              Often in the discrete setting, we set $x_n = nh + x_0$ for some $x_0$ and $h$ (the mesh or step size), and then discretize the function as $f_n = f(x_n)$ (or in more clever way if it suits the problem). This way:
+              $$D^+_x f_n = \frac{1}{h}(f_{n+1} - f_n)$$
+              $$D^-_x f_n = \frac{1}{h}(f_n - f_{n-1})$$
+              Of course, a natural question to ask is whether or not this replacement is justified. The main tool we can use for justification is Taylor's theorem:
+              $$f(x+h) = f(x) + f'(x)h + \frac{f''(x)}{2}h^2 + \frac{f'''(x)}{6}h^3 + \cdots$$
+              so that 
+              $$D^+_x f(x) = \frac{1}{h}(f(x+h) - f(x)) = f'(x) + O(h^2)$$
+              so that for sufficiently small mesh size $h$, the difference between the forward difference and the derivative is small.
+              <div class="remark">
+                <b>Remark.</b> This is one of the main puzzles I had regarding the study of PDEs. If differential equations were studied as a tool to model physical phenomena, and the discretizations are what we can actually compute, then is there any reason to prefer the continuous setting, rather than just studying and experimenting with the discrete systems?<br/><br/>
+
+                While I am still thinking about this question and need to get more opinions, I think that the answer is that the continuous setting can be seen as more clean. There are many discretizations that could correspond to one continuous problem up to very small errors, and there are tools for understanding the nature, existence, and uniqueness of solutions to the continuous problem that may not be available for the discrete setting. Not only that, discrete systems feel more rigid in many cases and blow up more easily (needing more stability conditions based on mesh sizes and time step sizes), so it is nice to have a continuous setting where we can develop qualitative expectations for our numerics.<br/><br/>
+
+                Overall though, I feel that it is a bit of a false dichotomy to think of the continuous setting as the "true" setting and the discrete setting as the "approximate" setting. I think that the continuous setting is a very powerful tool for understanding the nature of the problem, and the discrete setting is a very powerful tool for actually computing solutions to the problem. At the end of the day, the practicallity of the model is the error between the discrete scheme and the true phenomenon, which is at most the sum of the error of the numerical scheme with respect to the continuous model and the error of the continuous model itself—so in a machine learning sense, penalizing the error of the numerical scheme with respect to the continuous model is really like regularizing to match our qualitative expectations which are meant to be encapsulated in the continuous model.<br/><br/>
+
+                This philosophical approach to modeling seems to take the side of interpretability over pure pragmatics, so I believe it contributes a lot to the debate about the importance of interpretability in modeling. On the other hand, I think that the black box approaches of ML have seen enormous success recently, which has led me to the painful question of how <i>much</i> interpretability is really important in modeling.
+              </div>
+            </p>
+
+            <h2 id="wavelet-based-numerical-methods">Wavelet-Based Numerical Methods</h2>
+
+            <h2 id="all-of-physics-is-just-expanding-to-second-order">All of Physics is Just Expanding to Second Order</h2>
+
+            <h2 id="discretizations-that-show-up-in-time-series-modeling">Discretizations That Show Up in Time Series Modeling</h2>
+            <p>
+              I'm pained to admit that I forgot to write something down about this here in a comment, so what I meant by this may be lost to history since I'm coming back to finish it a year later.... I'll try to recover what I meant by this though, based on other notes in my personal diary that tell me what I was thinking about at the time.
+            </p>
+
+            <h2 id="references">References</h2>
+            <ol>
+              <li>Evans PDE book</li>
+              <li>Evans PDE survey</li>
+              <li>Strichartz Distributions Book</li>
+              <li>Tveito and Winther Intro to PDEs book</li>
+            </ol>
                   
 
         </main>

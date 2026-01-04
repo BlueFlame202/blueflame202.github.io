@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Nitzan Group Research Notes</title>
+    <!--<script id="mathjax" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-mml-chtml.min.js"></script>-->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"></link>
+    <link rel="icon" type="image/png" sizes="32x32" href="/orange-juice/img/favicon-32x32.png"></link>
+    <link rel="icon" type="image/png" sizes="16x16" href="/orange-juice/img/favicon-16x16.png"></link>
+    <link rel="manifest" href="/site.webmanifest" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="../../../orange-juice.css">
+
+    <script type="text/javascript">
+      window.MathJax = {
+        tex: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+          macros: {
+            "\Z": "\\mathbb{Z}",
+            "\Hom": "\\mathrm{Hom}",
+            "\Aut": "\\mathrm{Aut}",
+            "\null": "\\mathrm{null}",
+            "\R": "\\mathbb{R}",
+            "\N": "\\mathbb{N}",
+            "\Q": "\\mathbb{Q}",
+            "\Primes": "\\mathbb{P}",
+            "\C": "\\mathbb{C}",
+            "\F": "\\mathbb{F}",
+            "\D": "\\mathbb{D}",
+            "\Hart": "\\mathbb{H}",
+            "\Cat": "\\mathsf{Cat}",
+            "\CAT": "\\mathsf{CAT}",
+            "\CatC": "\\mathsf{CatC}",
+            "\CatD": "\\mathsf{CatD}",
+            "\CatE": "\\mathsf{CatE}",
+            "\CSet": "\\mathsf{Set}",
+            "\CGrp": "\\mathsf{Grp}",
+            "\CRing": "\\mathsf{Ring}",
+            "\CCRing": "\\mathsf{CRing}",
+            "\CMod": "\\mathsf{Mod}",
+            "\lendshow": "\\square",
+            "\tendshow": "\\blacksquare"
+          }
+        },
+        options: {
+          renderActions: {
+            addMenu: [],
+            checkLoading: []
+          },
+          ignoreHtmlClass: 'tex2jax_ignore',
+          processHtmlClass: 'tex2jax_process'
+        },
+        loader: {load: ['[tex]/ams']},
+        startup: {
+          ready: () => {
+            window.MathJax.startup.defaultReady();
+          }
+        }
+      };
+    </script>
+  </head>
+  <body>
+    <main>
+      <a href="../"><i>Back to all Comp Bio Research Notes...</i></a><br/>
+      <a href="https://aathreyakadambi.vercel.app/sea"><i>Back to Sea (from Lemonade)...</i></a>
+      <h1 class="title">Nitzan Group Thoughts</h1>
+      <hr/>
+      <h3>Thoughts on <i>TACCO</i></h3>
+      <p>
+        As per my current understanding, TACCO was a collaboration involving Simon Mages, researchers from the Nitzan Group, the Klarman Cell Observatory (where Simon Mages was visiting), the Klughammer Lab, and the Fei Chen Lab. First, here are some references that I checked out related to this paper:
+        <ul>
+            <li>The paper itself: <a href="https://www.nature.com/articles/s41587-023-01657-3" target="_blank">Teleport!</a></li>
+            <li>Twitter post about TACCO by Mages Lab: <a href="https://x.com/MagesLab/status/1577940227104145409" target="_blank">Teleport!</a></li>
+            <li>Twitter post about TACCO by Mor Nitzan: <a href="https://x.com/mor_nitzan/status/1626542425261895684">Teleport!</a></li>
+            <li>Twitter post about TACCO's application in dissection of the colorectal cancer spatial landscape by Inbal Avraham-Davidi: <a href="https://x.com/InbalDavidi/status/1577956334447763457" target="_blank">Teleport!</a></li>
+        </ul>
+      </p>
+
+      <b>Thoughts on use of optimal transport:</b>
+      <p>
+        I thought the use of partially balanced optimal transport was cool. In particular, some interesting points I realized are:
+        <ul>
+          <li>The discrete case corresponds to a linear programming problem.</li>
+          <li>Here, they use entropy regularized <i>partially balanced</i> optimal transport. The entropy regularization is for tractability, and the partially balanced is a situation where one of the distributions in the optimal transport is not fixed.</li>
+        </ul>
+        In particular, the use of <i>partially balanced</i> OT was pretty clever and cool, and even feels universal in some sense.
+      </p>
+
+      <b>General Thoughts:</b>
+      <p>
+        <ul>
+          <li>I thought merging different existing techniques into a TACCO framework was pretty cool.</li>
+        </ul>
+      </p>
+
+      <b>Questions:</b>
+      <p>
+        <ul>
+          <li>I was curious about the use of the UMAP plots in showing the success of the method, since I've heard people question the reliability of distances in UMAP plots. However, I feel that maybe UMAP distances are probably reliable in most cases except maybe pathological cases, or at least in most cases they should provide signal?</li>
+          <li>It seemed like the paper hinted that the OT cost function can be tuned to match any other method, so that it is a sort of universal formulation in some sense. I was wondering if this could be formalized mathematically.</li>
+        </ul>
+      </p>
+      <hr/>
+      
+    </main>
+  </body>
+</html>

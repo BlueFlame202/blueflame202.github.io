@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>How to learn about the universe</title>
+    <!--<script id="mathjax" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-mml-chtml.min.js"></script>-->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"></link>
+    <link rel="icon" type="image/png" sizes="32x32" href="/orange-juice/img/favicon-32x32.png"></link>
+    <link rel="icon" type="image/png" sizes="16x16" href="/orange-juice/img/favicon-16x16.png"></link>
+    <link rel="manifest" href="/site.webmanifest" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="../../orange-juice.css">
+
+    <script type="text/javascript">
+      window.MathJax = {
+        tex: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+          macros: {
+            "\Z": "\\mathbb{Z}",
+            "\Hom": "\\mathrm{Hom}",
+            "\Aut": "\\mathrm{Aut}",
+            "\null": "\\mathrm{null}",
+            "\R": "\\mathbb{R}",
+            "\N": "\\mathbb{N}",
+            "\Q": "\\mathbb{Q}",
+            "\Primes": "\\mathbb{P}",
+            "\C": "\\mathbb{C}",
+            "\F": "\\mathbb{F}",
+            "\D": "\\mathbb{D}",
+            "\Hart": "\\mathbb{H}",
+            "\Cat": "\\mathsf{Cat}",
+            "\CAT": "\\mathsf{CAT}",
+            "\CatC": "\\mathsf{CatC}",
+            "\CatD": "\\mathsf{CatD}",
+            "\CatE": "\\mathsf{CatE}",
+            "\CSet": "\\mathsf{Set}",
+            "\CGrp": "\\mathsf{Grp}",
+            "\CRing": "\\mathsf{Ring}",
+            "\CCRing": "\\mathsf{CRing}",
+            "\CMod": "\\mathsf{Mod}",
+            "\lendshow": "\\square",
+            "\tendshow": "\\blacksquare"
+          }
+        },
+        options: {
+          renderActions: {
+            addMenu: [],
+            checkLoading: []
+          },
+          ignoreHtmlClass: 'tex2jax_ignore',
+          processHtmlClass: 'tex2jax_process'
+        },
+        loader: {load: ['[tex]/ams']},
+        startup: {
+          ready: () => {
+            window.MathJax.startup.defaultReady();
+          }
+        }
+      };
+    </script>
+  </head>
+    <body>
+      <div>
+        <h1>How to learn about the universe</h1>
+        <span><a href="." style="text-decoration: none; color:black;"><b>data expressed via math</b></a></span>
+        <span style="float: right;"><a href="../">🧃</a> <a href="../">↑</a> <a href="../../nowhere">research</a> <a href="../../projects">projects</a> <a href="../">thoughts</a> <a href="../../travels">travels</a></span>
+      </div>
+
+      <p>
+        <u>May 31, 2025, 7:01 PM PST</u><br/><br/>
+
+        I kind of forgot about this diary for a while, but I'm back, with new views. Let me address some of the points I made in the first entry.
+      </p>
+
+      <p>
+        Is math the language of the universe?
+        <ul>
+          <li>I think calling it the "language of the universe" isn't necessarily valid. I feel like things like the work of Bourbaki make it seem like math exists in an <i>a priori</i> sense, but while I appreciate Bourbaki, I don't know if I believe that math is <i>a priori</i>.</li>
+        </ul>
+      </p>
+
+      <p>
+        Does math fail to consider data as much as the sciences?
+        <ul>
+          <li>Here, I think it depends on the mathematician. However, a lot of interesting mathematics has been born out of the sciences, which mainly came from human observations of data. In the modern era of data science, I think that sensors can replace human senses, and machine learning makes it easier to develop much more complex models. I think that applied math should adapt to this new era by developing new language and tools for these more complex models, which are related to but in many ways unlike older models such as PDEs.</li>
+          <li>I think that in the past, the geometries we could consider were very limited due to the lack of computational power and a lack of development of very hierarchical models like neural networks. Hierarchical models allow us to study very complex objects, which I'm not sure I have seen as much in the math literature I have read (to be fair, I haven't read enough).</li>
+        </ul>
+      </p>
+
+      <p>
+        What is the best way to learn about the world?
+        <ul>
+          <li>This is a much more rich debate that the statisticians have dived into, which I think is worth considering, since I want to be an applied mathematician.</li>
+          <li>Bayesian vs. Frequentist: My understanding is that frequentists prefer unknown variables which are in the strict sense "true values" rather than distributions. This leads to <i>statistical testing</i> and <i>hypothesis testing</i>, which are more negative and rule out possibilities. Bayesian statistics is more positive to me, in the sense that it assumes a prior distribution (assumes we know something), and then pushes that knowledge forward based on observations to posterior distributions. Frequentists also have many more specialized tools based on highly specific assumptions, whereas Bayesians mainly have one overarching framework.</li>
+          <ul>
+            <li>Andrew Gelman's (and Professor Alexander Strang's) ideas on Bayesian statistics are a bit more of a blend of both Bayesian and Frequentist statistics, which I think is a good way to go about it. I believe as applied mathematicians it is our duty to prioritize pragmatics over pretty formalism.</li>
+          </ul>
+          <li>Feynman <a href="https://www.youtube.com/watch?v=GNhlNSLQAFE">mentions in an interview</a> that he prefers learning by asserting what he knows in a more positive and constructive way, rather than pseudo-belief by failure to reject an idea.</li>
+          <ul>
+            <li>To me, this seems to agree with some Bayesian ideas above and the constructive spirit of mathematics.</li>
+            <li>Frequentists tend to draw belief from rejection rather than failure to reject ideas, which may be slightly different from what Feynman was mentioning. We all need a bit of frequentist skepticism.</li>
+          </ul>
+          <li>An interesting blog post on exploratory vs. confirmatory data analysis that my friend sent me: <a href="https://statmodeling.stat.columbia.edu/2025/05/23/exploratory-data-analysis-and-confirmatory-data-analysis-are-the-same-thing/">Teleport!</a></li>
+          <ul>
+            <li>Has other interesting links in it.</li>
+          </ul>
+          <li>Today, Terry Tao posted <a href="https://terrytao.wordpress.com/2025/05/31/a-lean-companion-to-analysis-i/">a blog post about his Lean companion to his book on analysis</a>, which brings in more questions about the relationship between math and computational tools.</li>
+        </ul>
+      </p>
+
+      <p>
+        At the end of the day, I am still confused as ever, but one thing I gained clarity on is that it is more fun to ask general questions about the world and try to answer them with all the tools I have at my disposal, rather than prioritizing and attempting to refine any one tool. In doing this, I think one can somehow gain insights about everything rather than just one thing.
+      </p>
+
+      <p>
+        <u>February 10, 2025, 7:14 PM PST</u><br/><br/>
+
+        I am starting this diary kind of randomly, to see if my seemingly negative views right now will hold out in the long run (they probably won't). How to go about understanding the universe? Is math the answer to everything? The promised language of the universe?
+      </p>
+
+      <!-- <p>
+        Initially, I thought mathematics was <i>the</i> answer. I spent years learning more and more math, and it's become a part of who I am at this point. To some extent, I still think I was right.
+        <ol>
+            <li>Mathematical language is precise in a way that few other languages are.</li>
+            <li>It reveals very deep ideas (for example, what geometric properties are intrinsic vs. extrinsic)</li>
+            <li>It allows for insane intuition (since mathematicians study isomorphisms and abstraction very carefully, allowing them to generalize and draw connections in very unique ways)</li>
+        </ol>
+        There's probably more to it too. But the problem I've come to have with spending most of my time learning mostly math (prioritizing it over other things) is that I've forsaken learning about how that learned intuition can be used in daily life.
+      </p> -->
+
+      <p>
+        One of my main concerns right now is that while mathematics does a good job in considering its models very precisely and completely, it sometimes fails to verify against real world <i>data</i>.
+      </p>
+
+      <p>
+        I just think that in a world where it is easier and easier to collect data, we may as well go out and do just that! Spending all our time building models doesn't necessarily mean that they will be good... and there is no way to tell without looking at data or observing nature anyway!
+      </p>
+
+      <!-- <p>
+        So at least for now, I feel that there are three parts to building a good model:
+        <ol>
+            <li>Having a good language to phrase the model in, and for working with the model (mathematics for logic + natural language)</li>
+            <li>Observing natural things in the world and collecting data</li>
+            <li>Coming up with assumptions, and then depending on the amount of data,</li>
+            <ul>
+                <li>If much data, fit a pretty general model, and verify if assumptions are met afterwards</li>
+                <li>If too little data, use assumptions for inductive bias or priors or some other way to "inform" the model/architecture, then fit</li>
+            </ul>
+        </ol>
+        To be honest, that third step is probably questionable though, and I don't have enough experience yet. That's the goal of this diary, along with taking Bayesian statistics, Buddhism, Riemannian geometry, and Wavelets and signals processing.
+      </p> -->
+
+      <p>
+        I really admire artists; artists learn about the world and sharpen their technical skills simultaneously through their work. I think that's pretty amazing, and it's what I strive to do. This is where math is different; you can exponentially sharpen your technical skills by studying math, but it isn't going to improve your knowledge of the world until you start taking a look at some data!
+      </p>
+
+      <p>
+        <!-- While that three step plan above is probably not the best, -->I think in any case that the best way to learn about the world is to interact with it to gain experience, and then express that knowledge through the most precise language familiar to you.
+      </p>
+      
+      <p>
+        <i>Note to self: Inference vs. sampling... that's something Prof. Listgarten was asking Brian L. Trippe today. Maybe I'll have to think about the philosophy of this. Prof. Listgarten seemed to think that there was a difference, whereas Dr. Trippe seemed to indicate that there wasn't, at least to a Bayesian.</i>
+      </p>
+      
+      
+    </body> 
+</html>

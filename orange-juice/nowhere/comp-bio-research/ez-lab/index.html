@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>E.Z. Lab Research Notes</title>
+    <!--<script id="mathjax" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-mml-chtml.min.js"></script>-->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"></link>
+    <link rel="icon" type="image/png" sizes="32x32" href="/orange-juice/img/favicon-32x32.png"></link>
+    <link rel="icon" type="image/png" sizes="16x16" href="/orange-juice/img/favicon-16x16.png"></link>
+    <link rel="manifest" href="/site.webmanifest" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="../../../orange-juice.css">
+
+    <script type="text/javascript">
+      window.MathJax = {
+        tex: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+          macros: {
+            "\Z": "\\mathbb{Z}",
+            "\Hom": "\\mathrm{Hom}",
+            "\Aut": "\\mathrm{Aut}",
+            "\null": "\\mathrm{null}",
+            "\R": "\\mathbb{R}",
+            "\N": "\\mathbb{N}",
+            "\Q": "\\mathbb{Q}",
+            "\Primes": "\\mathbb{P}",
+            "\C": "\\mathbb{C}",
+            "\F": "\\mathbb{F}",
+            "\D": "\\mathbb{D}",
+            "\Hart": "\\mathbb{H}",
+            "\Cat": "\\mathsf{Cat}",
+            "\CAT": "\\mathsf{CAT}",
+            "\CatC": "\\mathsf{CatC}",
+            "\CatD": "\\mathsf{CatD}",
+            "\CatE": "\\mathsf{CatE}",
+            "\CSet": "\\mathsf{Set}",
+            "\CGrp": "\\mathsf{Grp}",
+            "\CRing": "\\mathsf{Ring}",
+            "\CCRing": "\\mathsf{CRing}",
+            "\CMod": "\\mathsf{Mod}",
+            "\lendshow": "\\square",
+            "\tendshow": "\\blacksquare"
+          }
+        },
+        options: {
+          renderActions: {
+            addMenu: [],
+            checkLoading: []
+          },
+          ignoreHtmlClass: 'tex2jax_ignore',
+          processHtmlClass: 'tex2jax_process'
+        },
+        loader: {load: ['[tex]/ams']},
+        startup: {
+          ready: () => {
+            window.MathJax.startup.defaultReady();
+          }
+        }
+      };
+    </script>
+  </head>
+  <body>
+    <main>
+      <a href="../"><i>Back to all Comp Bio Research Notes...</i></a><br/>
+      <a href="https://aathreyakadambi.vercel.app/sea"><i>Back to Sea (from Lemonade)...</i></a>
+      <h1 class="title">E.Z. Lab Thoughts</h1>
+      <hr/>
+      <h3>Thoughts on <i>CryoBoltz</i></h3>
+
+      <b>General Thoughts:</b>
+      <ol>
+        <li>The idea of using Cryo-EM density maps to guide diffusion is a very cool way to add more data to the diffusion model at evaluation time. As always, I love optimal transport, so the idea of getting the point clouds via $k$-means to use Sinkhorn divergences was very cool.</li>
+        <li>The global and local guidance phases are interesting. I was especially interested in how the local only benchmarks perform far worse than the global only ones, and often worse than Boltz-1 (except for the CH67 antibody).</li>
+        <li>AlphaFold3 doing worse on outward state vs. inward state was interesting as well, whereas the opposite seems to be true of Boltz-1.</li>
+        <li>Figure 4 was particularly interesting to see CryoBoltz fitting the CDR H3 loop better.</li>
+      </ol>
+      <hr/>
+      
+    </main>
+  </body>
+</html>

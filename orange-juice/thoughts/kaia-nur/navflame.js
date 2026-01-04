@@ -93,18 +93,18 @@ class NavFlame extends HTMLElement {
             }
             </style>
                 <nav class="navbar sticky-top navbar-expand-md bg-body-tertiary transparent">
-        <a class="navbar-brand" href="https://www.ocf.berkeley.edu/~aathreyak/orange-juice/kaia-nur/"><h1>Kaia Nür</h1></a>
+        <a class="navbar-brand" href="https://www.ocf.berkeley.edu/~aathreyak/orange-juice/thoughts/kaia-nur/"><h1>Kaia Nür</h1></a>
       
         <div class="collapse navbar-collapse" id="navbarScroll">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-              <a class="nav-link" id="nav-photos" href="https://www.ocf.berkeley.edu/~aathreyak/orange-juice/kaia-nur/photos"><h2>Photos</h2></a>
+              <a class="nav-link" id="nav-photos" href="https://www.ocf.berkeley.edu/~aathreyak/orange-juice/thoughts/kaia-nur/photos"><h2>Photos</h2></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" id="nav-scenes" href="https://www.ocf.berkeley.edu/~aathreyak/orange-juice/kaia-nur/scenes"><h2>Scenes</h2></a>
+              <a class="nav-link" id="nav-scenes" href="https://www.ocf.berkeley.edu/~aathreyak/orange-juice/thoughts/kaia-nur/scenes"><h2>Scenes</h2></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" id="nav-proj" href="https://www.ocf.berkeley.edu/~aathreyak/orange-juice/kaia-nur/about"><h2>About</h2></a>
+              <a class="nav-link" id="nav-proj" href="https://www.ocf.berkeley.edu/~aathreyak/orange-juice/thoughts/kaia-nur/about"><h2>About</h2></a>
             </li>
             <li class="nav-item">
               <a class="nav-link" id="nav-oj" href="https://www.ocf.berkeley.edu/~aathreyak/orange-juice/"><h2>🧃</h2></a>

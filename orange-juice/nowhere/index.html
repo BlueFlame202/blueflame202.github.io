@@ -1,98 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <title>Research</title>
-    <!--<script id="mathjax" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-mml-chtml.min.js"></script>-->
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"></link>
-    <link rel="icon" type="image/png" sizes="32x32" href="../img/favicon-32x32.png"></link>
-    <link rel="icon" type="image/png" sizes="16x16" href="../img/favicon-16x16.png"></link>
-    <link rel="manifest" href="/site.webmanifest" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <link rel="stylesheet" href="../orange-juice.css">
 
-    <script type="text/javascript">
-      window.MathJax = {
-        tex: {
-          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-          displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
-          macros: {
-            "\Z": "\\mathbb{Z}",
-            "\Hom": "\\mathrm{Hom}",
-            "\Aut": "\\mathrm{Aut}",
-            "\null": "\\mathrm{null}",
-            "\R": "\\mathbb{R}",
-            "\N": "\\mathbb{N}",
-            "\Q": "\\mathbb{Q}",
-            "\Primes": "\\mathbb{P}",
-            "\C": "\\mathbb{C}",
-            "\F": "\\mathbb{F}",
-            "\D": "\\mathbb{D}",
-            "\Hart": "\\mathbb{H}",
-            "\Cat": "\\mathsf{Cat}",
-            "\CAT": "\\mathsf{CAT}",
-            "\CatC": "\\mathsf{CatC}",
-            "\CatD": "\\mathsf{CatD}",
-            "\CatE": "\\mathsf{CatE}",
-            "\CSet": "\\mathsf{Set}",
-            "\CGrp": "\\mathsf{Grp}",
-            "\CRing": "\\mathsf{Ring}",
-            "\CCRing": "\\mathsf{CRing}",
-            "\CMod": "\\mathsf{Mod}",
-            "\lendshow": "\\square",
-            "\tendshow": "\\blacksquare"
-          }
-        },
-        options: {
-          renderActions: {
-            addMenu: [],
-            checkLoading: []
-          },
-          ignoreHtmlClass: 'tex2jax_ignore',
-          processHtmlClass: 'tex2jax_process'
-        },
-        loader: {load: ['[tex]/ams']},
-        startup: {
-          ready: () => {
-            window.MathJax.startup.defaultReady();
-          }
+<head>
+  <meta charset="UTF-8">
+  <title>Research</title>
+  <!--<script id="mathjax" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-mml-chtml.min.js"></script>-->
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  </link>
+  <link rel="icon" type="image/png" sizes="32x32" href="../img/favicon-32x32.png">
+  </link>
+  <link rel="icon" type="image/png" sizes="16x16" href="../img/favicon-16x16.png">
+  </link>
+  <link rel="manifest" href="/site.webmanifest" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <!-- Unusual color scheme, in honor of Prof. Ribet -->
+  <link rel="stylesheet" href="../orange-juice.css">
+
+  <script type="text/javascript">
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ["\\(", "\\)"]],
+        displayMath: [['$$', '$$'], ["\\[", "\\]"]],
+        macros: {
+          "\Z": "\\mathbb{Z}",
+          "\Hom": "\\mathrm{Hom}",
+          "\Aut": "\\mathrm{Aut}",
+          "\null": "\\mathrm{null}",
+          "\R": "\\mathbb{R}",
+          "\N": "\\mathbb{N}",
+          "\Q": "\\mathbb{Q}",
+          "\Primes": "\\mathbb{P}",
+          "\C": "\\mathbb{C}",
+          "\F": "\\mathbb{F}",
+          "\D": "\\mathbb{D}",
+          "\Hart": "\\mathbb{H}",
+          "\Cat": "\\mathsf{Cat}",
+          "\CAT": "\\mathsf{CAT}",
+          "\CatC": "\\mathsf{CatC}",
+          "\CatD": "\\mathsf{CatD}",
+          "\CatE": "\\mathsf{CatE}",
+          "\CSet": "\\mathsf{Set}",
+          "\CGrp": "\\mathsf{Grp}",
+          "\CRing": "\\mathsf{Ring}",
+          "\CCRing": "\\mathsf{CRing}",
+          "\CMod": "\\mathsf{Mod}",
+          "\lendshow": "\\square",
+          "\tendshow": "\\blacksquare"
         }
-      };
-    </script>
-  </head>
-    <body>
-      <div>
-        <h1>Research</h1>
-        <span><a href="." style="text-decoration: none; color:black;"><b>Exploring Nowhere</b></a></span>
-        <span style="float: right;"><a href="/orange-juice">🧃</a> <a href="../">↑</a> <a href=""></a> <a href="./">research</a> <a href="../projects">projects</a> <a href="../thoughts">thoughts</a> <a href="../travels">travels</a></span>
-      </div>
+      },
+      options: {
+        renderActions: {
+          addMenu: [],
+          checkLoading: []
+        },
+        ignoreHtmlClass: 'tex2jax_ignore',
+        processHtmlClass: 'tex2jax_process'
+      },
+      loader: { load: ['[tex]/ams'] },
+      startup: {
+        ready: () => {
+          window.MathJax.startup.defaultReady();
+        }
+      }
+    };
+  </script>
+</head>
 
-        <p>
-          Welcome to nowhere... my research page! I believe the idea behind research is exploring places that have not been explored yet. Those places are referred to as "nowhere", until they are understood well enough to be given a name.
-        </p>
+<body>
+  <div>
+    <h1>Research</h1>
+    <span><a href="." style="text-decoration: none; color:black;"><b>Exploring the Unknown</b></a></span>
+    <span style="float: right;"><a href="../">🧃</a> <a href="../">↑</a> <a href=""></a> <a href="./">research</a> <a
+        href="../projects">projects</a> <a href="../thoughts">thoughts</a> <a href="../travels">travels</a></span>
+  </div>
+  <div style="display: flex; margin-top: 5%;">
+    <div style="display: inline-block; width: 70%;">
+      <p>
+        Welcome to my research page!
+        <!-- The idea behind research is exploring things that have not been explored yet. These places seem to not exist, until they are understood well enough to be given a name. -->
+      </p>
 
-        <p>
-          I'm still developing this part of my website, but the goal is to use this area to display my research and collaborate with others!
-        </p>
-        
-        <p>
-          <b>Links:</b>
-          <ul>
-            <li><a href="reading">Currently Reading...</a> (<a href="mailto:aathreyakadambi@berkeley.edu">reach out</a> if you're interested reading together)</li>
-          </ul>
-        </p>
+      <p>
+        I'm still developing this part of my website, but the goal is to use this area to display my research and
+        collaborate with others!
+      </p>
 
-        <p>
-          <b>Currently Working On:</b>
-          <ul>
-            <li>Ferrofluids (UC Berkeley)</li>
-            <li>Mechanistic Interpretability (EleutherAI)</li>
-          </ul>
-        </p>
+      <h3><u>Current Affiliations</u></h3>
+      <ul>
+        <li>ScienceML Lab (UC Berkeley)</li>
+      </ul>
 
-        <p>
+      <h3><u>Exposition</u></h3>
+      <ul>
+        <li><a href="../projects/sketches/sketch-notes-on-analysis/unfinished-notes-on-analysis.pdf">Notes on Analysis
+            [12/18/2025]</a> [click for current progress and please send me feedback!]</li>
+        <ul>
+          <li>I'm trying to add more pictures and diagrams. I'm open to suggestions!</li>
+        </ul>
+        <li><a href="comp-bio-research">Thoughts on Computational Biology Research</a><br /></li>
+      </ul>
+
+      <!-- <p>
           <b>Completed Surveys:</b>
           <ul>
             <li>Hold on... I've just started out! :D</li>
@@ -106,6 +116,23 @@
             <li>Mechanistic Interpretability</li>
             <li>Dark Matter and Dark Energy</li>
           </ul>
-        </p>
-    </body> 
+        </p> -->
+
+      <h3><u>Other</u></h3>
+      <ul>
+        <li><a href="reading">Currently Reading...</a> (<a href="mailto:aathreyakadambi@gmail.com">reach out</a> if
+          you're interested reading together)</li>
+      </ul>
+    </div>
+    <!-- Cool research photos, in honor of Dr. Maier -->
+    <div style="display: inline-block; margin-left: auto; width: 30%;">
+      <img src="../img/ch-6000x-speed.gif" style="width: 90%; margin-left: 10%;" />
+      <div style="margin-left: 10%;">
+        <!-- Small captioning, in honor of Prof. Utiralova -->
+        <center><small>Ostwald Ripening via Cahn-Hilliard Equation</small></center>
+      </div>
+    </div>
+  </div>
+</body>
+
 </html>

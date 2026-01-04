@@ -66,20 +66,63 @@
         <main>
             <a href="../"><i>See all sketches...</i></a>
             <h1 className="title">Sketch 11</h1>
-            <p><b>Function Space, Dual Space, and Fourier Space</b></p>
+            <p><b>Fourier's Legacy</b></p>
             <hr/>
             <h2>Huh...</h2>
             <p>
-              There are a lot of things I found weird in the mathematical formulation of quantum mechanics, but one of the weirdest things was the following identity:
-              $$\langle p | x\rangle = $$
+              There are a lot of things I found weird in the formulation of quantum mechanics, but one of the weirdest things was the following identity:
+              $$\langle x | p \rangle = \frac{1}{\sqrt{2\pi \hbar}} e^{ipx/\hbar}$$
+              That certainly looks a lot like the Fourier transform.... What is the uncertainty principle and where does it really come from? And why is it that the Fourier transform-looking object shows up here?
             </p>
 
             <p>
-              <b>Date Started:</b> <br />
+              This sketch is all about the Fourier transform and why it's so special. I'll concentrate on separable Hilbert spaces, $H$. In particular, there is some orthonormal basis.
+            </p>
+
+            <p>
+              <b>Date Started:</b> July 6, 2024<br />
               <b>Date Finished:</b> <i></i>
             </p>
 
-            
+            <h2>Orthogonal/Unitary Operators Lead to Uncertainty Principles</h2>
+            <p>
+              I was initially disappointed when I learned that any orthogonal or unitary operator which isn't identity produces an uncertainty principle, because I had wanted it to be inherently tied to the Fourier transform. I should have actually been excited, because this fact means that the uniquness of the Fourier transform will only come from an even stronger property.
+            </p>
+
+            <p>
+              When two orthonormal bases $\mathcal{B}_1$ and $\mathcal{B}_2$ are fundamentally different, they must have some "angle" between them which is less than perpendicular. The notion of angular "overlap" between bases is called coherence: 
+              $$\text{coh}(\mathcal{B}_1, \mathcal{B}_2) = \sup_{x \in \mathcal{B}_1, y \in \mathcal{B}_2} |\langle x, y\rangle| \le 1.$$
+            </p>
+
+            <div class="strat">
+              <b>Idea (Standard Coherence).</b> Consider a unitary operator $U$. Given a "standard basis" $\mathcal{B}$ of $H$, we can define the <b>standard coherence</b> of $U$ to be $\text{coh}(U) := \text{coh}(\mathcal{B}, U\mathcal{B})$. Here, $U\mathcal{B}$ means $\{Ub : b \in \mathcal{B}\}$.
+            </div>
+
+            <p>
+              In quantum mechanics, we have some extra "probabilistic notions" arising from the fact that the elements of our Hilbert space are wavefunctions which are inhrently tied to probability distributions:
+              <ol>
+                <li><b>Expectation w.r.t. x:</b> The expectation of an operator $U$ with respect to $x$ is $\langle U\rangle_x := \langle x, Ux\rangle$,</li>
+                <li><b>Variance w.r.t. x:</b> The variance of an operator $U$ with respect to $x$ is $\Delta_x U := \sqrt{\langle (U - \langle U\rangle_x)^2\rangle_x}$.</li>
+              </ol>
+              In quantum mechanics, the uncertainty in two operators is the product of their variances with respect to some wave function in the Hilbert space.
+            </p>
+
+            <p>
+              There is actually another notion of "uncertainty" in the quantum mechanical realm, which is taht of commutators. The uncertainty principle can be expressed by the fact that the commutator between the position and momentum operators is nonzero. In fact, some authors even take this principle as an axiom of quantum mechanics and define their commutator be 1. 
+            </p>
+
+            <div class="theorem">
+              <b>Theorem (Incoherence is Uncertainty).</b> Let $U$ be an unitary operator on $H$ with $\text{coh}(U) =: c$.
+              <ol>
+                <li>For any self-adjoint operator $A$ on $H$, let $B = UA$, then $[A, B] = AB - BA \le c$,</li>
+                <li>For any self-adjoint operator $A$ on $H$, let $B = UA$, then $\sup_{x\in H} \left(\Delta_x A \cdot \Delta_x B\right) = c$.</li>
+              </ol>
+            </div>
+            <i>Proof.</i>
+            <p>
+              For the first point, choose an eigenbasis $\{x_n\}$ from $A$. Then $\{Ux_n\}$ is also a basis.
+              <center>$(AUA - UA^2)x_n = (AU - UA)Ax_n = \lambda_n (AUx_n - UAx_n) = \lambda_n(AUx_n - \lambda_n Ux_n) = \lambda_n (A - \lambda_n)(Ux_n)$</center>
+            </p>
 
             
 
